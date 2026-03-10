@@ -1,4 +1,5 @@
 import LoginButton from "@/components/Login/LoginButton";
+import HomeContent from "@/components/Home/HomeContent";
 
 export default function HomePage() {
   return (
@@ -8,14 +9,7 @@ export default function HomePage() {
         <LoginButton />
       </header>
       <main className="flex flex-1 items-center justify-center">
-        <div className="flex flex-col items-center gap-4 text-center">
-          <h2 className="text-3xl font-bold tracking-tight">
-            Admin Dashboard
-          </h2>
-          <p className="text-lg text-gray-500">
-            Sign in to manage the Recoup platform.
-          </p>
-        </div>
+        <HomeContent />
       </main>
     </div>
   );
