@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { usePrivy } from "@privy-io/react-auth";
+import { API_BASE_URL } from "@/lib/consts";
 
 /**
  * Checks if the authenticated user is a Recoup admin
@@ -16,8 +17,7 @@ export function useIsAdmin() {
       const token = await getAccessToken();
       if (!token) return false;
 
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
-      const res = await fetch(`${apiUrl}/api/admins`, {
+      const res = await fetch(`${API_BASE_URL}/api/admins`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
