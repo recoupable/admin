@@ -32,7 +32,7 @@ pnpm start
 
 ## Project Structure
 
-```
+```text
 admin/
 ├── app/              # Next.js App Router pages and layouts
 │   ├── globals.css   # Global styles (Tailwind CSS)
