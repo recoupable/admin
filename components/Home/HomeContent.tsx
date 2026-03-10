@@ -35,5 +35,9 @@ export default function HomeContent() {
     );
   }
 
-  return <AdminDashboard />;
+  return (
+    <div className="w-full px-6 py-8">
+      <AdminDashboard />
+    </div>
+  );
 }
