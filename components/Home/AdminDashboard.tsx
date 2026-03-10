@@ -1,10 +1,15 @@
+import AccountsTable from "@/components/Accounts/AccountsTable";
+
 export default function AdminDashboard() {
   return (
-    <div className="flex flex-col items-center gap-4 text-center">
-      <h2 className="text-3xl font-bold tracking-tight">Admin Dashboard</h2>
-      <p className="text-lg text-muted-foreground">
-        Welcome back. You have admin access.
-      </p>
+    <div className="flex w-full max-w-4xl flex-col gap-6">
+      <div>
+        <h2 className="text-2xl font-bold tracking-tight">Accounts with Sandboxes</h2>
+        <p className="text-sm text-muted-foreground">
+          All accounts that have created sandboxes on the platform.
+        </p>
+      </div>
+      <AccountsTable />
     </div>
   );
 }
