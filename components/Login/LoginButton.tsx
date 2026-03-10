@@ -1,12 +1,13 @@
 "use client";
 
 import { usePrivy } from "@privy-io/react-auth";
+import LoginButtonSkeleton from "./LoginButtonSkeleton";
 
 export default function LoginButton() {
   const { login, logout, authenticated, ready, user } = usePrivy();
 
   if (!ready) {
-    return null;
+    return <LoginButtonSkeleton />;
   }
 
   if (authenticated) {
