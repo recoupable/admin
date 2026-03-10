@@ -6,7 +6,7 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "ESLINT_USE_FLAT_CONFIG=false eslint ."
+    "lint": "eslint ."
   },
   "dependencies": {
     "@privy-io/react-auth": "^1.88.4",
@@ -21,8 +21,8 @@
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "eslint": "^9",
-    "eslint-config-next": "^16.0.10",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "^15.3.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
