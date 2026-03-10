@@ -1,7 +1,14 @@
 "use client";
 
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import PrivyProvider from "./PrivyProvider";
 
+const queryClient = new QueryClient();
+
 export default function Providers({ children }: { children: React.ReactNode }) {
-  return <PrivyProvider>{children}</PrivyProvider>;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <PrivyProvider>{children}</PrivyProvider>
+    </QueryClientProvider>
+  );
 }

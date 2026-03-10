@@ -8,7 +8,7 @@ import { useIsAdmin } from "@/hooks/useIsAdmin";
 
 export default function HomePage() {
   const { ready, authenticated } = usePrivy();
-  const { isAdmin, isLoading } = useIsAdmin();
+  const { data: isAdmin, isLoading } = useIsAdmin();
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -31,7 +31,7 @@ export default function HomePage() {
 interface HomeContentProps {
   ready: boolean;
   authenticated: boolean;
-  isAdmin: boolean | null;
+  isAdmin: boolean | undefined;
   isLoading: boolean;
 }
 
