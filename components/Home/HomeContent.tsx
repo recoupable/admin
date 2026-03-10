@@ -1,14 +1,14 @@
+"use client";
+
+import { usePrivy } from "@privy-io/react-auth";
+import { useIsAdmin } from "@/hooks/useIsAdmin";
 import AdminDashboard from "@/components/Home/AdminDashboard";
 import HomePageSkeleton from "@/components/Home/HomePageSkeleton";
 
-interface HomeContentProps {
-  ready: boolean;
-  authenticated: boolean;
-  isAdmin: boolean | undefined;
-  isLoading: boolean;
-}
+export default function HomeContent() {
+  const { ready, authenticated } = usePrivy();
+  const { data: isAdmin, isLoading } = useIsAdmin();
 
-export default function HomeContent({ ready, authenticated, isAdmin, isLoading }: HomeContentProps) {
   if (!ready || isLoading) {
     return <HomePageSkeleton />;
   }
