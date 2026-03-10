@@ -8,12 +8,12 @@ export default function LoginButton() {
   if (authenticated) {
     return (
       <div className="flex items-center gap-3">
-        <span className="text-sm text-gray-600">
+        <span className="text-sm text-muted-foreground">
           {user?.email?.address ?? "Signed in"}
         </span>
         <button
           onClick={logout}
-          className="rounded-md border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50"
+          className="inline-flex items-center justify-center rounded-xl border border-input bg-background px-4 py-2 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
         >
           Sign Out
         </button>
@@ -24,7 +24,7 @@ export default function LoginButton() {
   return (
     <button
       onClick={login}
-      className="rounded-md bg-[#003199] px-6 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#002577]"
+      className="inline-flex items-center justify-center rounded-xl bg-primary px-8 py-2.5 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
     >
       Sign In
     </button>
