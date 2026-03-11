@@ -1,13 +1,10 @@
 "use client";
 
 import { useAdminSandboxes } from "@/hooks/useAdminSandboxes";
-import SandboxesTable from "./SandboxesTable";
+import SandboxesTable from "@/components/Sandboxes/SandboxesTable";
 
-/**
- * Client component that fetches and renders the account sandboxes table.
- */
 export default function SandboxesTableContainer() {
-  const { accounts, isLoading, error } = useAdminSandboxes();
+  const { data: accounts, isLoading, error } = useAdminSandboxes();
 
   if (isLoading) {
     return (
@@ -20,12 +17,12 @@ export default function SandboxesTableContainer() {
   if (error) {
     return (
       <div className="rounded-md bg-red-50 p-4 text-sm text-red-700 dark:bg-red-900/20 dark:text-red-400">
-        {error}
+        {error instanceof Error ? error.message : "Failed to load sandboxes"}
       </div>
     );
   }
 
-  if (accounts.length === 0) {
+  if (!accounts || accounts.length === 0) {
     return (
       <div className="flex items-center justify-center py-12 text-sm text-gray-400">
         No sandbox data found.

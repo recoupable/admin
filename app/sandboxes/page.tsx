@@ -1,4 +1,4 @@
-import SandboxesTableContainer from "@/components/SandboxesTable/SandboxesTableContainer";
+import SandboxesTableContainer from "@/components/Sandboxes/SandboxesTableContainer";
 
 export const metadata = {
   title: "Sandboxes — Recoup Admin",
