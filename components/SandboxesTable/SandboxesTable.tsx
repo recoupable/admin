@@ -6,7 +6,7 @@ interface SandboxesTableProps {
 
 /**
  * Renders a table of accounts and their sandbox statistics.
- * Columns: Account Name, Total Sandboxes, Last Created.
+ * Columns: Account Email, Total Sandboxes, Last Created.
  *
  * @param accounts - Array of account sandbox rows from the admin API
  */
@@ -20,7 +20,7 @@ export default function SandboxesTable({ accounts }: SandboxesTableProps) {
               scope="col"
               className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400"
             >
-              Account Name
+              Account Email
             </th>
             <th
               scope="col"
@@ -40,7 +40,7 @@ export default function SandboxesTable({ accounts }: SandboxesTableProps) {
           {accounts.map(row => (
             <tr key={row.account_id} className="hover:bg-gray-50 dark:hover:bg-gray-800">
               <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900 dark:text-gray-100">
-                {row.account_name ?? (
+                {row.account_email ?? (
                   <span className="text-gray-400 dark:text-gray-500">
                     {row.account_id}
                   </span>

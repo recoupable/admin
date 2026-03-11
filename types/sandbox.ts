@@ -1,6 +1,6 @@
 export interface AccountSandboxRow {
   account_id: string;
-  account_name: string | null;
+  account_email: string | null;
   total_sandboxes: number;
   last_created_at: string;
 }
