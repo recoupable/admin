@@ -1,35 +1,23 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import type { AccountSandboxRow } from "@/types/sandbox";
-
-const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "https://recoup-api.vercel.app";
-
-async function fetchAdminSandboxes(): Promise<AccountSandboxRow[]> {
-  const apiKey = process.env.NEXT_PUBLIC_API_KEY;
-
-  const res = await fetch(`${API_BASE}/api/admins/sandboxes`, {
-    headers: {
-      ...(apiKey ? { "x-api-key": apiKey } : {}),
-    },
-  });
-
-  if (!res.ok) {
-    const body = await res.json().catch(() => ({}));
-    throw new Error(body.message ?? `HTTP ${res.status}`);
-  }
-
-  const data = await res.json();
-  return data.accounts ?? [];
-}
+import { usePrivy } from "@privy-io/react-auth";
+import { fetchAdminSandboxes } from "@/lib/fetchAdminSandboxes";
 
 /**
  * Fetches account sandbox statistics from GET /api/admins/sandboxes
- * using TanStack Query for caching and background refresh.
+ * using TanStack Query. Authenticates with the Privy access token.
  */
 export function useAdminSandboxes() {
+  const { ready, authenticated, getAccessToken } = usePrivy();
+
   return useQuery({
     queryKey: ["admin", "sandboxes"],
-    queryFn: fetchAdminSandboxes,
+    queryFn: async () => {
+      const token = await getAccessToken();
+      if (!token) throw new Error("Not authenticated");
+      return fetchAdminSandboxes(token);
+    },
+    enabled: ready && authenticated,
   });
 }
