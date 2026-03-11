@@ -7,10 +7,16 @@ interface SandboxesTableProps {
 /**
  * Renders a table of accounts and their sandbox statistics.
  * Columns: Account Email, Total Sandboxes, Last Created.
+ * Default sort: Last Created descending (most recent first).
  *
  * @param accounts - Array of account sandbox rows from the admin API
  */
 export default function SandboxesTable({ accounts }: SandboxesTableProps) {
+  const sorted = [...accounts].sort(
+    (a, b) =>
+      new Date(b.last_created_at).getTime() - new Date(a.last_created_at).getTime(),
+  );
+
   return (
     <div className="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-700">
       <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
@@ -32,12 +38,12 @@ export default function SandboxesTable({ accounts }: SandboxesTableProps) {
               scope="col"
               className="px-6 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 dark:text-gray-400"
             >
-              Last Created
+              Last Created ↓
             </th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900">
-          {accounts.map(row => (
+          {sorted.map(row => (
             <tr key={row.account_id} className="hover:bg-gray-50 dark:hover:bg-gray-800">
               <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900 dark:text-gray-100">
                 {row.account_email ?? (
