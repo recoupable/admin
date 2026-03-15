@@ -1,4 +1,5 @@
 import SandboxesNavButton from "@/components/Home/SandboxesNavButton";
+import OrgsNavButton from "@/components/Home/OrgsNavButton";
 
 export default function AdminDashboard() {
   return (
@@ -9,6 +10,7 @@ export default function AdminDashboard() {
       </p>
       <nav className="flex gap-4">
         <SandboxesNavButton />
+        <OrgsNavButton />
       </nav>
     </div>
   );
