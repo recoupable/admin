@@ -10,11 +10,7 @@ interface TaskRunsTableProps {
 
 export default function TaskRunsTable({ runs }: TaskRunsTableProps) {
   if (runs.length === 0) {
-    return (
-      <p className="text-sm text-gray-500 dark:text-gray-400 py-8 text-center">
-        No task runs found for this account.
-      </p>
-    );
+    return null;
   }
 
   return (

@@ -3,6 +3,9 @@
 import { useAccountTaskRuns } from "@/hooks/useAccountTaskRuns";
 import AccountBreadcrumb from "./AccountBreadcrumb";
 import TaskRunsTable from "./TaskRunsTable";
+import TableSkeleton from "@/components/Sandboxes/TableSkeleton";
+
+const TASK_RUN_COLUMNS = ["Task", "Status", "Started", "Duration", "Run ID"];
 
 interface AccountDetailPageProps {
   accountId: string;
@@ -41,11 +44,7 @@ export default function AccountDetailPage({ accountId }: AccountDetailPageProps)
           )}
         </div>
 
-        {isLoading && (
-          <div className="py-12 text-center text-sm text-gray-500 dark:text-gray-400">
-            Loading task runs…
-          </div>
-        )}
+        {isLoading && <TableSkeleton columns={TASK_RUN_COLUMNS} />}
 
         {error && (
           <div className="py-8 text-center text-sm text-red-500">
