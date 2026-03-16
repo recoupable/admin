@@ -2,16 +2,13 @@
 
 import { useAdminSandboxOrgs } from "@/hooks/useAdminSandboxOrgs";
 import SandboxOrgsTable from "@/components/SandboxOrgs/SandboxOrgsTable";
+import SandboxOrgsTableSkeleton from "@/components/SandboxOrgs/SandboxOrgsTableSkeleton";
 
 export default function SandboxOrgsTableContainer() {
   const { data: repos, isLoading, error } = useAdminSandboxOrgs();
 
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center py-12 text-sm text-gray-500">
-        Loading…
-      </div>
-    );
+    return <SandboxOrgsTableSkeleton />;
   }
 
   if (error) {
@@ -22,7 +19,9 @@ export default function SandboxOrgsTableContainer() {
     );
   }
 
-  if (!repos || repos.length === 0) {
+  const orgRepos = (repos ?? []).filter((r) => r.repo_name.startsWith("org-"));
+
+  if (orgRepos.length === 0) {
     return (
       <div className="flex items-center justify-center py-12 text-sm text-gray-400">
         No org repo data found.
@@ -30,5 +29,5 @@ export default function SandboxOrgsTableContainer() {
     );
   }
 
-  return <SandboxOrgsTable repos={repos} />;
+  return <SandboxOrgsTable repos={orgRepos} />;
 }
