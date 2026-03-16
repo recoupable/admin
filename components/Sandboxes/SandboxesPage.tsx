@@ -1,6 +1,6 @@
 import SandboxesTableContainer from "@/components/Sandboxes/SandboxesTableContainer";
 import ApiDocsLink from "@/components/ApiDocsLink";
-import PageBreadcrumb from "@/components/PageBreadcrumb";
+import PageBreadcrumb from "@/components/Sandboxes/PageBreadcrumb";
 
 export default function SandboxesPage() {
   return (
