@@ -6,9 +6,10 @@ import { formatRunDuration } from "@/lib/tasks/formatRunDuration";
 
 interface TaskRunsTableProps {
   runs: TaskRun[];
+  onRunClick?: (run: TaskRun) => void;
 }
 
-export default function TaskRunsTable({ runs }: TaskRunsTableProps) {
+export default function TaskRunsTable({ runs, onRunClick }: TaskRunsTableProps) {
   if (runs.length === 0) {
     return null;
   }
@@ -27,7 +28,11 @@ export default function TaskRunsTable({ runs }: TaskRunsTableProps) {
         </thead>
         <tbody className="divide-y divide-gray-200 dark:divide-gray-700 bg-white dark:bg-gray-900">
           {runs.map((run) => (
-            <tr key={run.id} className="hover:bg-gray-50 dark:hover:bg-gray-800">
+            <tr
+              key={run.id}
+              className={`hover:bg-gray-50 dark:hover:bg-gray-800 ${onRunClick ? "cursor-pointer" : ""}`}
+              onClick={() => onRunClick?.(run)}
+            >
               <td className="px-4 py-3 font-medium text-gray-900 dark:text-gray-100">
                 {run.taskIdentifier}
               </td>
