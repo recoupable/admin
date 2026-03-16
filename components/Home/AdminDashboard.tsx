@@ -1,4 +1,5 @@
 import NavButton from "@/components/Home/NavButton";
+import ApiDocsLink from "@/components/ApiDocsLink";
 
 export default function AdminDashboard() {
   return (
@@ -11,6 +12,7 @@ export default function AdminDashboard() {
         <NavButton href="/sandboxes" label="View Sandboxes" />
         <NavButton href="/sandboxes/orgs" label="View Org Commits" />
       </nav>
+      <ApiDocsLink path="admins/check" />
     </div>
   );
 }
