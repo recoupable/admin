@@ -1,5 +1,6 @@
 import { type ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import type { AccountSandboxRow } from "@/types/sandbox";
 
@@ -7,10 +8,19 @@ export const sandboxesColumns: ColumnDef<AccountSandboxRow>[] = [
   {
     accessorKey: "account_email",
     header: "Account Email",
-    cell: ({ row }) =>
-      row.getValue("account_email") ?? (
-        <span className="text-muted-foreground">{row.original.account_id}</span>
-      ),
+    cell: ({ row }) => {
+      const email = row.getValue<string | null>("account_email");
+      const accountId = row.original.account_id;
+      return (
+        <Link
+          href={`/accounts/${accountId}`}
+          className="text-[#345A5D] hover:underline font-medium"
+          title={`View task runs for ${email ?? accountId}`}
+        >
+          {email ?? <span className="font-mono text-xs text-gray-500">{accountId}</span>}
+        </Link>
+      );
+    },
   },
   {
     accessorKey: "total_sandboxes",
