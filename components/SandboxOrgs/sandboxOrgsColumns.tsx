@@ -81,11 +81,52 @@ export const sandboxOrgsColumns: ColumnDef<OrgRepoRow>[] = [
   },
   {
     accessorKey: "account_repos",
-    header: "Accounts",
+    header: ({ column }) => (
+      <Button
+        variant="ghost"
+        onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        className="-ml-3 h-8 px-3"
+      >
+        Account Repos
+        {column.getIsSorted() === "asc" ? (
+          <ArrowUp className="ml-1 h-4 w-4" />
+        ) : column.getIsSorted() === "desc" ? (
+          <ArrowDown className="ml-1 h-4 w-4" />
+        ) : (
+          <ArrowUpDown className="ml-1 h-4 w-4 text-muted-foreground" />
+        )}
+      </Button>
+    ),
+    sortingFn: (rowA, rowB) => {
+      const a = (rowA.getValue<string[]>("account_repos") ?? []).length;
+      const b = (rowB.getValue<string[]>("account_repos") ?? []).length;
+      return a - b;
+    },
     cell: ({ row }) => {
       const repos: string[] = row.getValue("account_repos") ?? [];
-      return repos.length;
+      if (repos.length === 0) {
+        return <span className="text-muted-foreground">—</span>;
+      }
+      return (
+        <ul className="space-y-0.5 text-sm">
+          {repos.map((url) => {
+            const name = url.split("/").pop() ?? url;
+            return (
+              <li key={url}>
+                <a
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 hover:underline dark:text-blue-400 truncate block max-w-xs"
+                  title={url}
+                >
+                  {name}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      );
     },
-    enableSorting: false,
   },
 ];
