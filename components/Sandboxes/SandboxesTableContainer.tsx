@@ -2,16 +2,15 @@
 
 import { useAdminSandboxes } from "@/hooks/useAdminSandboxes";
 import SandboxesTable from "@/components/Sandboxes/SandboxesTable";
+import TableSkeleton from "@/components/Sandboxes/TableSkeleton";
+
+const COLUMNS = ["Account", "Email", "Total Sandboxes", "Last Created"];
 
 export default function SandboxesTableContainer() {
   const { data: accounts, isLoading, error } = useAdminSandboxes();
 
   if (isLoading) {
-    return (
-      <div className="flex items-center justify-center py-12 text-sm text-gray-500">
-        Loading…
-      </div>
-    );
+    return <TableSkeleton columns={COLUMNS} />;
   }
 
   if (error) {
