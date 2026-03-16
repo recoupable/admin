@@ -1,5 +1,4 @@
-import SandboxesNavButton from "@/components/Home/SandboxesNavButton";
-import OrgReposNavButton from "@/components/Home/OrgReposNavButton";
+import NavButton from "@/components/Home/NavButton";
 
 export default function AdminDashboard() {
   return (
@@ -9,8 +8,8 @@ export default function AdminDashboard() {
         Welcome back. You have admin access.
       </p>
       <nav className="flex gap-4">
-        <SandboxesNavButton />
-        <OrgReposNavButton />
+        <NavButton href="/sandboxes" label="View Sandboxes" />
+        <NavButton href="/sandboxes/orgs" label="View Org Commits" />
       </nav>
     </div>
   );
