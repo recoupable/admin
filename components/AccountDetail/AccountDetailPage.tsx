@@ -1,15 +1,7 @@
 "use client";
 
-import Link from "next/link";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import { useAccountTaskRuns } from "@/hooks/useAccountTaskRuns";
+import AccountBreadcrumb from "./AccountBreadcrumb";
 import TaskRunsTable from "./TaskRunsTable";
 
 interface AccountDetailPageProps {
@@ -24,25 +16,7 @@ export default function AccountDetailPage({ accountId }: AccountDetailPageProps)
   return (
     <main className="mx-auto max-w-6xl px-4 py-10">
       <div className="mb-6">
-        <Breadcrumb className="mb-3">
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink asChild>
-                <Link href="/">Home</Link>
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbLink asChild>
-                <Link href="/sandboxes/orgs">Org Repos</Link>
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage className="font-mono text-sm">{accountId}</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
+        <AccountBreadcrumb accountId={accountId} />
 
         <h1 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-100">
           Account Task Runs
