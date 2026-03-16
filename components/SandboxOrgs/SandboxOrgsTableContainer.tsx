@@ -2,13 +2,15 @@
 
 import { useAdminSandboxOrgs } from "@/hooks/useAdminSandboxOrgs";
 import SandboxOrgsTable from "@/components/SandboxOrgs/SandboxOrgsTable";
-import SandboxOrgsTableSkeleton from "@/components/SandboxOrgs/SandboxOrgsTableSkeleton";
+import TableSkeleton from "@/components/Sandboxes/TableSkeleton";
+
+const COLUMNS = ["Repo", "Total Commits", "Recent Commits", "Latest Commit", "Account Repos"];
 
 export default function SandboxOrgsTableContainer() {
   const { data: repos, isLoading, error } = useAdminSandboxOrgs();
 
   if (isLoading) {
-    return <SandboxOrgsTableSkeleton />;
+    return <TableSkeleton columns={COLUMNS} />;
   }
 
   if (error) {
