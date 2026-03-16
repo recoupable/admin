@@ -1,4 +1,5 @@
 import SandboxesTableContainer from "@/components/Sandboxes/SandboxesTableContainer";
+import ApiDocsLink from "@/components/ApiDocsLink";
 
 export default function SandboxesPage() {
   return (
@@ -12,14 +13,7 @@ export default function SandboxesPage() {
             All accounts and their sandbox usage.
           </p>
         </div>
-        <a
-          href="https://developers.recoupable.com/api-reference/admins/sandboxes"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-sm text-blue-600 hover:underline dark:text-blue-400"
-        >
-          API Docs ↗
-        </a>
+        <ApiDocsLink path="admins/sandboxes" />
       </div>
       <SandboxesTableContainer />
     </main>

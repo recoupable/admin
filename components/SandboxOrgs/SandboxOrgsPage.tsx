@@ -1,4 +1,5 @@
 import SandboxOrgsTableContainer from "@/components/SandboxOrgs/SandboxOrgsTableContainer";
+import ApiDocsLink from "@/components/ApiDocsLink";
 
 export default function SandboxOrgsPage() {
   return (
@@ -12,14 +13,7 @@ export default function SandboxOrgsPage() {
             Commits per org sub-module across all sandboxes, ordered by activity.
           </p>
         </div>
-        <a
-          href="https://developers.recoupable.com/api-reference/admins/sandboxes-orgs"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-sm text-blue-600 hover:underline dark:text-blue-400"
-        >
-          API Docs ↗
-        </a>
+        <ApiDocsLink path="admins/sandboxes-orgs" />
       </div>
       <SandboxOrgsTableContainer />
     </main>
