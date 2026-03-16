@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { usePrivy } from "@privy-io/react-auth";
-import { fetchAdminSandboxOrgs } from "@/lib/fetchAdminSandboxOrgs";
+import { fetchAdminSandboxOrgs } from "@/lib/recoup/fetchAdminSandboxOrgs";
 
 /**
  * Fetches org repo commit statistics from GET /api/admins/sandboxes/orgs
