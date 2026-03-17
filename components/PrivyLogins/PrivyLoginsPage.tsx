@@ -8,6 +8,7 @@ import PrivyLoginsTable from "@/components/PrivyLogins/PrivyLoginsTable";
 import PrivyPeriodSelector from "@/components/PrivyLogins/PrivyPeriodSelector";
 import PrivyLoginsStats from "@/components/PrivyLogins/PrivyLoginsStats";
 import TableSkeleton from "@/components/Sandboxes/TableSkeleton";
+import ChartSkeleton from "@/components/PrivyLogins/ChartSkeleton";
 import PrivyLastSeenChart from "@/components/PrivyLogins/PrivyLastSeenChart";
 import type { PrivyLoginsPeriod } from "@/types/privy";
 
@@ -36,7 +37,10 @@ export default function PrivyLoginsPage() {
       </div>
 
       {isLoading && (
-        <TableSkeleton columns={["Email", "Created At", "Last Seen"]} />
+        <>
+          <ChartSkeleton />
+          <TableSkeleton columns={["Email", "Created At", "Last Seen"]} />
+        </>
       )}
 
       {error && (
