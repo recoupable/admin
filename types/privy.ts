@@ -26,6 +26,5 @@ export type PrivyLoginsResponse = {
   total: number;
   total_new: number;
   total_active: number;
-  total_privy_users: number;
   logins: PrivyUser[];
 };
