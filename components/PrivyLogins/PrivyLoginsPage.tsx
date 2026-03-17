@@ -8,13 +8,14 @@ import PrivyLoginsTable from "@/components/PrivyLogins/PrivyLoginsTable";
 import type { PrivyLoginsPeriod } from "@/types/privy";
 
 const PERIODS: { value: PrivyLoginsPeriod; label: string }[] = [
+  { value: "all", label: "All Time" },
   { value: "daily", label: "Daily" },
   { value: "weekly", label: "Weekly" },
   { value: "monthly", label: "Monthly" },
 ];
 
 export default function PrivyLoginsPage() {
-  const [period, setPeriod] = useState<PrivyLoginsPeriod>("daily");
+  const [period, setPeriod] = useState<PrivyLoginsPeriod>("all");
   const { data, isLoading, error } = usePrivyLogins(period);
 
   return (
@@ -50,10 +51,17 @@ export default function PrivyLoginsPage() {
         </div>
 
         {data && (
-          <span className="text-sm text-gray-500 dark:text-gray-400">
-            <span className="font-semibold text-gray-900 dark:text-gray-100">{data.total}</span>{" "}
-            login{data.total !== 1 ? "s" : ""}
-          </span>
+          <div className="flex gap-4 text-sm text-gray-500 dark:text-gray-400">
+            <span>
+              <span className="font-semibold text-gray-900 dark:text-gray-100">{data.total_new}</span> new
+            </span>
+            <span>
+              <span className="font-semibold text-gray-900 dark:text-gray-100">{data.total_active}</span> active
+            </span>
+            <span>
+              <span className="font-semibold text-gray-900 dark:text-gray-100">{data.total}</span> total
+            </span>
+          </div>
         )}
       </div>
 

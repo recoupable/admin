@@ -6,10 +6,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import type { PrivyLoginRow } from "@/types/privy";
+import type { PrivyUser } from "@/types/privy";
 
 interface PrivyLoginsTableProps {
-  logins: PrivyLoginRow[];
+  logins: PrivyUser[];
+}
+
+function getEmail(user: PrivyUser): string | null {
+  const emailAccount = user.linked_accounts.find((a) => a.type === "email");
+  return (emailAccount?.address as string) ?? null;
 }
 
 export default function PrivyLoginsTable({ logins }: PrivyLoginsTableProps) {
@@ -24,17 +29,20 @@ export default function PrivyLoginsTable({ logins }: PrivyLoginsTableProps) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {logins.map((login) => (
-            <TableRow key={login.privy_did}>
-              <TableCell className="font-medium">
-                {login.email ?? <span className="text-gray-400 italic">No email</span>}
-              </TableCell>
-              <TableCell className="font-mono text-xs text-gray-500">{login.privy_did}</TableCell>
-              <TableCell className="text-sm text-gray-600 dark:text-gray-400">
-                {new Date(login.created_at).toLocaleString()}
-              </TableCell>
-            </TableRow>
-          ))}
+          {logins.map((login) => {
+            const email = getEmail(login);
+            return (
+              <TableRow key={login.id}>
+                <TableCell className="font-medium">
+                  {email ?? <span className="text-gray-400 italic">No email</span>}
+                </TableCell>
+                <TableCell className="font-mono text-xs text-gray-500">{login.id}</TableCell>
+                <TableCell className="text-sm text-gray-600 dark:text-gray-400">
+                  {new Date(login.created_at * 1000).toLocaleString()}
+                </TableCell>
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </div>

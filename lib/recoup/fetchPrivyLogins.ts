@@ -6,8 +6,8 @@ import type { PrivyLoginsPeriod, PrivyLoginsResponse } from "@/types/privy";
  * Authenticates using the caller's Privy access token (admin Bearer auth).
  *
  * @param accessToken - Privy access token from getAccessToken()
- * @param period - Time period: "daily", "weekly", or "monthly"
- * @returns PrivyLoginsResponse with total count and login rows
+ * @param period - Time period: "all", "daily", "weekly", or "monthly"
+ * @returns PrivyLoginsResponse with counts and full Privy user objects
  */
 export async function fetchPrivyLogins(
   accessToken: string,
