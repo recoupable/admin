@@ -1,10 +1,9 @@
-export type PrivyLinkedAccount = {
+export type PrivyLinkedAccount = Record<string, unknown> & {
   type: string;
   address?: string;
   verified_at?: number;
   first_verified_at?: number | null;
   latest_verified_at?: number | null;
-  [key: string]: unknown;
 };
 
 /**
