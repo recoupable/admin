@@ -21,6 +21,7 @@ export default function PrivyLoginsTable({ logins }: PrivyLoginsTableProps) {
             <TableHead>Email</TableHead>
             <TableHead>Privy DID</TableHead>
             <TableHead>Created At</TableHead>
+            <TableHead>Last Seen</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>

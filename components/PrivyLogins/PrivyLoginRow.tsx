@@ -1,6 +1,7 @@
 import { TableRow, TableCell } from "@/components/ui/table";
 import type { PrivyUser } from "@/types/privy";
 import { getEmail } from "@/lib/privy/getEmail";
+import { getLastSeen } from "@/lib/privy/getLastSeen";
 
 interface PrivyLoginRowProps {
   login: PrivyUser;
@@ -8,6 +9,7 @@ interface PrivyLoginRowProps {
 
 export default function PrivyLoginRow({ login }: PrivyLoginRowProps) {
   const email = getEmail(login);
+  const lastSeen = getLastSeen(login);
   return (
     <TableRow key={login.id}>
       <TableCell className="font-medium">
@@ -16,6 +18,9 @@ export default function PrivyLoginRow({ login }: PrivyLoginRowProps) {
       <TableCell className="font-mono text-xs text-gray-500">{login.id}</TableCell>
       <TableCell className="text-sm text-gray-600 dark:text-gray-400">
         {new Date(login.created_at * 1000).toLocaleString()}
+      </TableCell>
+      <TableCell className="text-sm text-gray-600 dark:text-gray-400">
+        {lastSeen ? new Date(lastSeen * 1000).toLocaleString() : <span className="text-gray-400 italic">Never</span>}
       </TableCell>
     </TableRow>
   );
