@@ -7,6 +7,7 @@ import { usePrivyLogins } from "@/hooks/usePrivyLogins";
 import PrivyLoginsTable from "@/components/PrivyLogins/PrivyLoginsTable";
 import PrivyPeriodSelector from "@/components/PrivyLogins/PrivyPeriodSelector";
 import PrivyLoginsStats from "@/components/PrivyLogins/PrivyLoginsStats";
+import TableSkeleton from "@/components/Sandboxes/TableSkeleton";
 import type { PrivyLoginsPeriod } from "@/types/privy";
 
 export default function PrivyLoginsPage() {
@@ -34,9 +35,7 @@ export default function PrivyLoginsPage() {
       </div>
 
       {isLoading && (
-        <div className="flex items-center justify-center py-12 text-sm text-gray-400">
-          Loading logins…
-        </div>
+        <TableSkeleton columns={["Email", "Created At", "Last Seen"]} />
       )}
 
       {error && (
