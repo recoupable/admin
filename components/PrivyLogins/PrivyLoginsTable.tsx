@@ -7,14 +7,10 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { PrivyUser } from "@/types/privy";
+import { getEmail } from "@/lib/privy/getEmail";
 
 interface PrivyLoginsTableProps {
   logins: PrivyUser[];
-}
-
-function getEmail(user: PrivyUser): string | null {
-  const emailAccount = user.linked_accounts.find((a) => a.type === "email");
-  return (emailAccount?.address as string) ?? null;
 }
 
 export default function PrivyLoginsTable({ logins }: PrivyLoginsTableProps) {
