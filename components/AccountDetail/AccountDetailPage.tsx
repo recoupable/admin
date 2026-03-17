@@ -77,7 +77,6 @@ export default function AccountDetailPage({ accountId }: AccountDetailPageProps)
 
       {selectedRun && (
         <PulseEmailModal
-          accountId={accountId}
           run={selectedRun}
           onClose={() => setSelectedRun(null)}
         />
