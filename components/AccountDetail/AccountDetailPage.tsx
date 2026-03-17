@@ -1,9 +1,12 @@
 "use client";
 
+import { useState } from "react";
 import { useAccountTaskRuns } from "@/hooks/useAccountTaskRuns";
 import AccountBreadcrumb from "./AccountBreadcrumb";
 import TaskRunsTable from "./TaskRunsTable";
+import PulseEmailModal from "./PulseEmailModal";
 import TableSkeleton from "@/components/Sandboxes/TableSkeleton";
+import type { TaskRun } from "@/types/sandbox";
 
 const TASK_RUN_COLUMNS = ["Task", "Status", "Started", "Duration", "Run ID"];
 
@@ -13,6 +16,7 @@ interface AccountDetailPageProps {
 
 export default function AccountDetailPage({ accountId }: AccountDetailPageProps) {
   const { data: runs, isLoading, error } = useAccountTaskRuns(accountId);
+  const [selectedRun, setSelectedRun] = useState<TaskRun | null>(null);
 
   const pulseRuns = runs?.filter(r => r.taskIdentifier === "send-pulse-task") ?? [];
 
@@ -52,7 +56,12 @@ export default function AccountDetailPage({ accountId }: AccountDetailPageProps)
           </div>
         )}
 
-        {!isLoading && !error && <TaskRunsTable runs={pulseRuns} />}
+        {!isLoading && !error && (
+          <TaskRunsTable
+            runs={pulseRuns}
+            onRunClick={(run) => setSelectedRun(run)}
+          />
+        )}
 
         {!isLoading && !error && runs && runs.length > pulseRuns.length && (
           <details className="mt-6">
@@ -65,6 +74,13 @@ export default function AccountDetailPage({ accountId }: AccountDetailPageProps)
           </details>
         )}
       </section>
+
+      {selectedRun && (
+        <PulseEmailModal
+          run={selectedRun}
+          onClose={() => setSelectedRun(null)}
+        />
+      )}
     </main>
   );
 }
