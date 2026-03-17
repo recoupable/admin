@@ -11,6 +11,7 @@ export default function AdminDashboard() {
       <nav className="flex gap-4">
         <NavButton href="/sandboxes" label="View Sandboxes" />
         <NavButton href="/sandboxes/orgs" label="View Org Commits" />
+        <NavButton href="/privy" label="View Privy Logins" />
       </nav>
     </div>
   );
