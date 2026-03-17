@@ -1,12 +1,23 @@
 import { API_BASE_URL } from "@/lib/consts";
 
+/**
+ * Full Resend GetEmailResponseSuccess shape.
+ * See https://resend.com/docs/api-reference/emails/retrieve-email
+ */
 export interface PulseEmail {
   id: string;
-  subject: string | null;
+  from: string;
   to: string[];
-  from: string | null;
+  cc: string[] | null;
+  bcc: string[] | null;
+  reply_to: string[] | null;
+  subject: string;
   html: string | null;
+  text: string | null;
   created_at: string;
+  scheduled_at: string | null;
+  last_event: string;
+  tags?: { name: string; value: string }[];
 }
 
 /**
