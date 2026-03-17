@@ -5,14 +5,9 @@ import PageBreadcrumb from "@/components/Sandboxes/PageBreadcrumb";
 import ApiDocsLink from "@/components/ApiDocsLink";
 import { usePrivyLogins } from "@/hooks/usePrivyLogins";
 import PrivyLoginsTable from "@/components/PrivyLogins/PrivyLoginsTable";
+import PrivyPeriodSelector from "@/components/PrivyLogins/PrivyPeriodSelector";
+import PrivyLoginsStats from "@/components/PrivyLogins/PrivyLoginsStats";
 import type { PrivyLoginsPeriod } from "@/types/privy";
-
-const PERIODS: { value: PrivyLoginsPeriod; label: string }[] = [
-  { value: "all", label: "All Time" },
-  { value: "daily", label: "Daily" },
-  { value: "weekly", label: "Weekly" },
-  { value: "monthly", label: "Monthly" },
-];
 
 export default function PrivyLoginsPage() {
   const [period, setPeriod] = useState<PrivyLoginsPeriod>("all");
@@ -34,35 +29,8 @@ export default function PrivyLoginsPage() {
       </div>
 
       <div className="mb-6 flex items-center gap-4">
-        <div className="flex rounded-lg border bg-white dark:bg-gray-900 overflow-hidden">
-          {PERIODS.map(({ value, label }) => (
-            <button
-              key={value}
-              onClick={() => setPeriod(value)}
-              className={`px-4 py-2 text-sm font-medium transition-colors ${
-                period === value
-                  ? "bg-gray-900 text-white dark:bg-white dark:text-gray-900"
-                  : "text-gray-600 hover:bg-gray-50 dark:text-gray-400 dark:hover:bg-gray-800"
-              }`}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-
-        {data && (
-          <div className="flex gap-4 text-sm text-gray-500 dark:text-gray-400">
-            <span>
-              <span className="font-semibold text-gray-900 dark:text-gray-100">{data.total_new}</span> new
-            </span>
-            <span>
-              <span className="font-semibold text-gray-900 dark:text-gray-100">{data.total_active}</span> active
-            </span>
-            <span>
-              <span className="font-semibold text-gray-900 dark:text-gray-100">{data.total}</span> total
-            </span>
-          </div>
-        )}
+        <PrivyPeriodSelector period={period} onPeriodChange={setPeriod} />
+        {data && <PrivyLoginsStats data={data} />}
       </div>
 
       {isLoading && (
