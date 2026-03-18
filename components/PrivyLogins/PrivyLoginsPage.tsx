@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import PageBreadcrumb from "@/components/Sandboxes/PageBreadcrumb";
-import ApiDocsLink from "@/components/ApiDocsLink";
+import ApiDocsLink from "@/components/ApiDocs/ApiDocsLink";
 import { usePrivyLogins } from "@/hooks/usePrivyLogins";
 import PrivyLoginsTable from "@/components/PrivyLogins/PrivyLoginsTable";
 import PrivyPeriodSelector from "@/components/PrivyLogins/PrivyPeriodSelector";

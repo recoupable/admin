@@ -1,5 +1,5 @@
 import LoginButton from "@/components/Login/LoginButton";
-import { HideToggle } from "@/components/HideToggle";
+import { HideToggle } from "@/components/Header/HideToggle";
 
 export default function AppHeader() {
   return (
