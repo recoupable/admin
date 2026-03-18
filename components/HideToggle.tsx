@@ -3,9 +3,13 @@
 import { Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useHide } from "@/providers/HideProvider";
+import { usePrivy } from "@privy-io/react-auth";
 
 export function HideToggle() {
   const { isHidden, toggle } = useHide();
+  const { ready, authenticated } = usePrivy();
+
+  if (!ready || !authenticated) return null;
 
   return (
     <div className="fixed top-4 right-4 z-50">
