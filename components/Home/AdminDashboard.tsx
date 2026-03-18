@@ -1,5 +1,5 @@
 import NavButton from "@/components/Home/NavButton";
-import ApiDocsLink from "@/components/ApiDocsLink";
+import ApiDocsLink from "@/components/ApiDocs/ApiDocsLink";
 
 export default function AdminDashboard() {
   return (

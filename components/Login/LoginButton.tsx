@@ -2,10 +2,12 @@
 
 import { usePrivy } from "@privy-io/react-auth";
 import { Button } from "@/components/ui/button";
+import { useDisplayEmail } from "@/lib/hide/useDisplayEmail";
 import LoginButtonSkeleton from "./LoginButtonSkeleton";
 
 export default function LoginButton() {
   const { login, logout, authenticated, ready, user } = usePrivy();
+  const displayEmail = useDisplayEmail(user?.email?.address ?? null);
 
   if (!ready) {
     return <LoginButtonSkeleton />;
@@ -15,7 +17,7 @@ export default function LoginButton() {
     return (
       <div className="flex items-center gap-3">
         <span className="text-sm text-muted-foreground">
-          {user?.email?.address ?? "Signed in"}
+          {displayEmail ?? "Signed in"}
         </span>
         <Button variant="ghost" onClick={logout}>
           Sign Out
