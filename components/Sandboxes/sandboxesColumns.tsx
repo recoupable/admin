@@ -2,25 +2,46 @@ import { type ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { useHide } from "@/providers/HideProvider";
+import { maskEmail } from "@/lib/maskEmail";
 import type { AccountSandboxRow } from "@/types/sandbox";
+
+function AccountEmailCell({
+  email,
+  accountId,
+}: {
+  email: string | null;
+  accountId: string;
+}) {
+  const { isHidden } = useHide();
+  const displayEmail = email
+    ? isHidden
+      ? maskEmail(email)
+      : email
+    : null;
+  return (
+    <Link
+      href={`/accounts/${accountId}`}
+      className="text-[#345A5D] hover:underline font-medium"
+      title={`View task runs for ${email ?? accountId}`}
+    >
+      {displayEmail ?? (
+        <span className="font-mono text-xs text-gray-500">{accountId}</span>
+      )}
+    </Link>
+  );
+}
 
 export const sandboxesColumns: ColumnDef<AccountSandboxRow>[] = [
   {
     accessorKey: "account_email",
     header: "Account Email",
-    cell: ({ row }) => {
-      const email = row.getValue<string | null>("account_email");
-      const accountId = row.original.account_id;
-      return (
-        <Link
-          href={`/accounts/${accountId}`}
-          className="text-[#345A5D] hover:underline font-medium"
-          title={`View task runs for ${email ?? accountId}`}
-        >
-          {email ?? <span className="font-mono text-xs text-gray-500">{accountId}</span>}
-        </Link>
-      );
-    },
+    cell: ({ row }) => (
+      <AccountEmailCell
+        email={row.getValue<string | null>("account_email")}
+        accountId={row.original.account_id}
+      />
+    ),
   },
   {
     accessorKey: "total_sandboxes",
