@@ -1,36 +1,8 @@
 import { type ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, ArrowUp, ArrowDown } from "lucide-react";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { useHide } from "@/providers/HideProvider";
-import { maskEmail } from "@/lib/maskEmail";
+import AccountEmailCell from "@/components/Sandboxes/AccountEmailCell";
 import type { AccountSandboxRow } from "@/types/sandbox";
-
-function AccountEmailCell({
-  email,
-  accountId,
-}: {
-  email: string | null;
-  accountId: string;
-}) {
-  const { isHidden } = useHide();
-  const displayEmail = email
-    ? isHidden
-      ? maskEmail(email)
-      : email
-    : null;
-  return (
-    <Link
-      href={`/accounts/${accountId}`}
-      className="text-[#345A5D] hover:underline font-medium"
-      title={`View task runs for ${email ?? accountId}`}
-    >
-      {displayEmail ?? (
-        <span className="font-mono text-xs text-gray-500">{accountId}</span>
-      )}
-    </Link>
-  );
-}
 
 export const sandboxesColumns: ColumnDef<AccountSandboxRow>[] = [
   {

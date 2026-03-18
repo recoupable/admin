@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useHide } from "@/providers/HideProvider";
-import { maskEmail } from "@/lib/maskEmail";
+import { maskEmail } from "@/lib/hide/maskEmail";
 import type { AccountRepo } from "@/types/sandbox";
 
 interface AccountReposListProps {
@@ -28,7 +28,7 @@ export function AccountReposList({ repos }: AccountReposListProps) {
             <Link
               href={`/accounts/${account_id}`}
               className="text-[#345A5D] hover:underline font-medium truncate block max-w-xs"
-              title={`View task runs for ${email ?? account_id}`}
+              title={`View task runs for ${displayLabel}`}
             >
               {displayLabel}
             </Link>

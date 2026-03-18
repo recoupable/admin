@@ -1,7 +1,7 @@
 "use client";
 
 import { useHide } from "@/providers/HideProvider";
-import { maskEmail } from "@/lib/maskEmail";
+import { maskEmail } from "@/lib/hide/maskEmail";
 
 interface EmailCellProps {
   getValue: () => string | null;
