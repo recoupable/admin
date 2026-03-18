@@ -8,7 +8,10 @@ export function HideToggle() {
 
   return (
     <button
+      type="button"
       onClick={toggle}
+      aria-label={isHidden ? "Show sensitive info" : "Hide sensitive info"}
+      aria-pressed={isHidden}
       title={isHidden ? "Show sensitive info" : "Hide sensitive info"}
       className="text-muted-foreground hover:text-foreground transition-colors"
     >

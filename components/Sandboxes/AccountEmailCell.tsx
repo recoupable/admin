@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useHide } from "@/providers/HideProvider";
-import { maskEmail } from "@/lib/hide/maskEmail";
+import { useDisplayEmail } from "@/lib/hide/useDisplayEmail";
 
 interface AccountEmailCellProps {
   email: string | null;
@@ -10,12 +9,7 @@ interface AccountEmailCellProps {
 }
 
 export default function AccountEmailCell({ email, accountId }: AccountEmailCellProps) {
-  const { isHidden } = useHide();
-  const displayEmail = email
-    ? isHidden
-      ? maskEmail(email)
-      : email
-    : null;
+  const displayEmail = useDisplayEmail(email);
   return (
     <Link
       href={`/accounts/${accountId}`}
