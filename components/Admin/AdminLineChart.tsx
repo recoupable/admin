@@ -7,30 +7,26 @@ import {
   ChartTooltipContent,
   type ChartConfig,
 } from "@/components/ui/chart";
-import type { PrivyUser } from "@/types/privy";
-import { getLastSeenByDate } from "@/lib/privy/getLastSeenByDate";
 
-const chartConfig = {
-  count: {
-    label: "Last Seen",
-    color: "#345A5D",
-  },
-} satisfies ChartConfig;
-
-interface PrivyLastSeenChartProps {
-  logins: PrivyUser[];
+interface AdminLineChartProps {
+  title: string;
+  data: Array<{ date: string; count: number }>;
+  label?: string;
 }
 
-export default function PrivyLastSeenChart({ logins }: PrivyLastSeenChartProps) {
-  const data = getLastSeenByDate(logins);
-
+export default function AdminLineChart({ title, data, label = "Count" }: AdminLineChartProps) {
   if (data.length === 0) return null;
+
+  const chartConfig = {
+    count: {
+      label,
+      color: "#345A5D",
+    },
+  } satisfies ChartConfig;
 
   return (
     <div className="mb-6 rounded-lg border p-4">
-      <h2 className="mb-4 text-sm font-medium text-gray-700 dark:text-gray-300">
-        Last Seen Activity
-      </h2>
+      <h2 className="mb-4 text-sm font-medium text-gray-700 dark:text-gray-300">{title}</h2>
       <ChartContainer config={chartConfig} className="h-[250px] w-full">
         <LineChart data={data} accessibilityLayer>
           <CartesianGrid vertical={false} />
@@ -50,7 +46,11 @@ export default function PrivyLastSeenChart({ logins }: PrivyLastSeenChartProps) 
               <ChartTooltipContent
                 labelFormatter={(value) => {
                   const d = new Date(String(value) + "T00:00:00");
-                  return d.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" });
+                  return d.toLocaleDateString("en-US", {
+                    month: "long",
+                    day: "numeric",
+                    year: "numeric",
+                  });
                 }}
               />
             }
