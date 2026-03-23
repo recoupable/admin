@@ -4,6 +4,7 @@ import { useState } from "react";
 import PageBreadcrumb from "@/components/Sandboxes/PageBreadcrumb";
 import ApiDocsLink from "@/components/ApiDocs/ApiDocsLink";
 import { useSlackTags } from "@/hooks/useSlackTags";
+import { useCodingPrStatus } from "@/hooks/useCodingPrStatus";
 import SlackTagsTable from "./SlackTagsTable";
 import AdminLineChart from "@/components/Admin/AdminLineChart";
 import { getTagsByDate } from "@/lib/coding-agent/getTagsByDate";
@@ -15,6 +16,10 @@ import type { AdminPeriod } from "@/types/admin";
 export default function CodingAgentSlackTagsPage() {
   const [period, setPeriod] = useState<AdminPeriod>("all");
   const { data, isLoading, error } = useSlackTags(period);
+  const { data: mergedPrUrls } = useCodingPrStatus(data?.tags);
+
+  const tagsByDate = data ? getTagsByDate(data.tags, mergedPrUrls) : [];
+  const totalMergedPrs = mergedPrUrls?.size ?? 0;
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-10">
@@ -47,6 +52,10 @@ export default function CodingAgentSlackTagsPage() {
               <span className="font-semibold text-gray-900 dark:text-gray-100">{data.total_pull_requests}</span>{" "}
               total PRs
             </span>
+            <span>
+              <span className="font-semibold text-gray-900 dark:text-gray-100">{totalMergedPrs}</span>{" "}
+              merged PRs
+            </span>
           </div>
         )}
       </div>
@@ -74,17 +83,23 @@ export default function CodingAgentSlackTagsPage() {
         <>
           <AdminLineChart
             title="Tags & Pull Requests Over Time"
-            data={getTagsByDate(data.tags).map((d) => ({ date: d.date, count: d.count }))}
+            data={tagsByDate.map((d) => ({ date: d.date, count: d.count }))}
             label="Tags"
             secondLine={{
-              data: getTagsByDate(data.tags).map((d) => ({
-                date: d.date,
-                count: d.pull_request_count,
-              })),
+              data: tagsByDate.map((d) => ({ date: d.date, count: d.pull_request_count })),
               label: "Tags with PRs",
             }}
+            thirdLine={
+              mergedPrUrls
+                ? {
+                    data: tagsByDate.map((d) => ({ date: d.date, count: d.merged_pr_count })),
+                    label: "PRs Merged",
+                    color: "#22863a",
+                  }
+                : undefined
+            }
           />
-          <SlackTagsTable tags={data.tags} />
+          <SlackTagsTable tags={data.tags} mergedPrUrls={mergedPrUrls} />
         </>
       )}
     </main>

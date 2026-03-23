@@ -18,3 +18,13 @@ export interface SlackTagsResponse {
   tags_with_pull_requests: number;
   tags: SlackTag[];
 }
+
+export interface CodingPrStatus {
+  url: string;
+  merged: boolean;
+}
+
+export interface CodingPrStatusResponse {
+  status: "success";
+  pull_requests: CodingPrStatus[];
+}

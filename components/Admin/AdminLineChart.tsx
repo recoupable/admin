@@ -10,7 +10,7 @@ import {
   type ChartConfig,
 } from "@/components/ui/chart";
 
-interface SecondLine {
+interface ExtraLine {
   data: Array<{ date: string; count: number }>;
   label: string;
   color?: string;
@@ -20,7 +20,8 @@ interface AdminLineChartProps {
   title: string;
   data: Array<{ date: string; count: number }>;
   label?: string;
-  secondLine?: SecondLine;
+  secondLine?: ExtraLine;
+  thirdLine?: ExtraLine;
 }
 
 export default function AdminLineChart({
@@ -28,6 +29,7 @@ export default function AdminLineChart({
   data,
   label = "Count",
   secondLine,
+  thirdLine,
 }: AdminLineChartProps) {
   if (data.length === 0) return null;
 
@@ -36,14 +38,19 @@ export default function AdminLineChart({
     ...(secondLine
       ? { count2: { label: secondLine.label, color: secondLine.color ?? "#6B8E93" } }
       : {}),
+    ...(thirdLine
+      ? { count3: { label: thirdLine.label, color: thirdLine.color ?? "#4A90A4" } }
+      : {}),
   } satisfies ChartConfig;
 
-  // Merge primary and secondary data by date
+  // Merge primary, secondary, and tertiary data by date
   const secondMap = new Map(secondLine?.data.map((d) => [d.date, d.count]) ?? []);
+  const thirdMap = new Map(thirdLine?.data.map((d) => [d.date, d.count]) ?? []);
   const mergedData = data.map((d) => ({
     date: d.date,
     count: d.count,
     ...(secondLine ? { count2: secondMap.get(d.date) ?? 0 } : {}),
+    ...(thirdLine ? { count3: thirdMap.get(d.date) ?? 0 } : {}),
   }));
 
   return (
@@ -77,7 +84,7 @@ export default function AdminLineChart({
               />
             }
           />
-          {secondLine && <ChartLegend content={<ChartLegendContent />} />}
+          {(secondLine || thirdLine) && <ChartLegend content={<ChartLegendContent />} />}
           <Line
             dataKey="count"
             type="monotone"
@@ -92,6 +99,15 @@ export default function AdminLineChart({
               stroke="var(--color-count2)"
               strokeWidth={2}
               dot={{ fill: "var(--color-count2)", r: 4 }}
+            />
+          )}
+          {thirdLine && (
+            <Line
+              dataKey="count3"
+              type="monotone"
+              stroke="var(--color-count3)"
+              strokeWidth={2}
+              dot={{ fill: "var(--color-count3)", r: 4 }}
             />
           )}
         </LineChart>

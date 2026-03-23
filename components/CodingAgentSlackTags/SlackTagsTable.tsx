@@ -16,21 +16,24 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { slackTagsColumns } from "./SlackTagsColumns";
+import { createSlackTagsColumns } from "./SlackTagsColumns";
 import type { SlackTag } from "@/types/coding-agent";
 
 interface SlackTagsTableProps {
   tags: SlackTag[];
+  mergedPrUrls?: Set<string>;
 }
 
-export default function SlackTagsTable({ tags }: SlackTagsTableProps) {
+export default function SlackTagsTable({ tags, mergedPrUrls }: SlackTagsTableProps) {
   const [sorting, setSorting] = useState<SortingState>([
     { id: "timestamp", desc: true },
   ]);
 
+  const columns = createSlackTagsColumns(mergedPrUrls);
+
   const table = useReactTable({
     data: tags,
-    columns: slackTagsColumns,
+    columns,
     state: { sorting },
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
@@ -66,7 +69,7 @@ export default function SlackTagsTable({ tags }: SlackTagsTableProps) {
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={slackTagsColumns.length} className="h-24 text-center">
+              <TableCell colSpan={columns.length} className="h-24 text-center">
                 No results.
               </TableCell>
             </TableRow>
