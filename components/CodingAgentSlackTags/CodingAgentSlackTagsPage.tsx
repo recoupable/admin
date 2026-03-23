@@ -44,7 +44,7 @@ export default function CodingAgentSlackTagsPage() {
       {isLoading && (
         <>
           <ChartSkeleton />
-          <TableSkeleton columns={["Tagged By", "Prompt", "Channel", "Timestamp"]} />
+          <TableSkeleton columns={["Tagged By", "Prompt", "Channel", "Pull Requests", "Timestamp"]} />
         </>
       )}
 
@@ -62,7 +62,18 @@ export default function CodingAgentSlackTagsPage() {
 
       {!isLoading && !error && data && data.tags.length > 0 && (
         <>
-          <AdminLineChart title="Tags Over Time" data={getTagsByDate(data.tags)} label="Tags" />
+          <AdminLineChart
+            title="Tags & Pull Requests Over Time"
+            data={getTagsByDate(data.tags).map((d) => ({ date: d.date, count: d.count }))}
+            label="Tags"
+            secondLine={{
+              data: getTagsByDate(data.tags).map((d) => ({
+                date: d.date,
+                count: d.pull_request_count,
+              })),
+              label: "Pull Requests",
+            }}
+          />
           <SlackTagsTable tags={data.tags} />
         </>
       )}
