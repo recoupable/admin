@@ -6,14 +6,13 @@ import ApiDocsLink from "@/components/ApiDocs/ApiDocsLink";
 import { useSlackTags } from "@/hooks/useSlackTags";
 import SlackTagsTable from "./SlackTagsTable";
 import SlackTagsChart from "./SlackTagsChart";
-import PrivyPeriodSelector from "@/components/PrivyLogins/PrivyPeriodSelector";
+import PeriodSelector from "@/components/Admin/PeriodSelector";
 import TableSkeleton from "@/components/Sandboxes/TableSkeleton";
 import ChartSkeleton from "@/components/PrivyLogins/ChartSkeleton";
-import type { SlackTagsPeriod } from "@/types/coding-agent";
-import type { PrivyLoginsPeriod } from "@/types/privy";
+import type { AdminPeriod } from "@/types/admin";
 
 export default function CodingAgentSlackTagsPage() {
-  const [period, setPeriod] = useState<SlackTagsPeriod>("all");
+  const [period, setPeriod] = useState<AdminPeriod>("all");
   const { data, isLoading, error } = useSlackTags(period);
 
   return (
@@ -32,10 +31,7 @@ export default function CodingAgentSlackTagsPage() {
       </div>
 
       <div className="mb-6 flex items-center gap-4">
-        <PrivyPeriodSelector
-          period={period as PrivyLoginsPeriod}
-          onPeriodChange={(p) => setPeriod(p as SlackTagsPeriod)}
-        />
+        <PeriodSelector period={period} onPeriodChange={setPeriod} />
         {data && (
           <div className="text-sm text-gray-600 dark:text-gray-400">
             <span className="font-semibold text-gray-900 dark:text-gray-100">{data.total}</span>{" "}

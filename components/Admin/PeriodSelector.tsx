@@ -1,18 +1,18 @@
-import type { PrivyLoginsPeriod } from "@/types/privy";
+import type { AdminPeriod } from "@/types/admin";
 
-const PERIODS: { value: PrivyLoginsPeriod; label: string }[] = [
+const PERIODS: { value: AdminPeriod; label: string }[] = [
   { value: "all", label: "All Time" },
   { value: "daily", label: "Daily" },
   { value: "weekly", label: "Weekly" },
   { value: "monthly", label: "Monthly" },
 ];
 
-interface PrivyPeriodSelectorProps {
-  period: PrivyLoginsPeriod;
-  onPeriodChange: (period: PrivyLoginsPeriod) => void;
+interface PeriodSelectorProps {
+  period: AdminPeriod;
+  onPeriodChange: (period: AdminPeriod) => void;
 }
 
-export default function PrivyPeriodSelector({ period, onPeriodChange }: PrivyPeriodSelectorProps) {
+export default function PeriodSelector({ period, onPeriodChange }: PeriodSelectorProps) {
   return (
     <div className="flex rounded-lg border bg-white dark:bg-gray-900 overflow-hidden">
       {PERIODS.map(({ value, label }) => (

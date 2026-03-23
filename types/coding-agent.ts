@@ -8,7 +8,7 @@ export interface SlackTag {
   channel_name: string;
 }
 
-export type SlackTagsPeriod = "all" | "daily" | "weekly" | "monthly";
+export type { AdminPeriod as SlackTagsPeriod } from "./admin";
 
 export interface SlackTagsResponse {
   status: "success";

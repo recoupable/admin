@@ -5,15 +5,15 @@ import PageBreadcrumb from "@/components/Sandboxes/PageBreadcrumb";
 import ApiDocsLink from "@/components/ApiDocs/ApiDocsLink";
 import { usePrivyLogins } from "@/hooks/usePrivyLogins";
 import PrivyLoginsTable from "@/components/PrivyLogins/PrivyLoginsTable";
-import PrivyPeriodSelector from "@/components/PrivyLogins/PrivyPeriodSelector";
+import PeriodSelector from "@/components/Admin/PeriodSelector";
 import PrivyLoginsStats from "@/components/PrivyLogins/PrivyLoginsStats";
 import TableSkeleton from "@/components/Sandboxes/TableSkeleton";
 import ChartSkeleton from "@/components/PrivyLogins/ChartSkeleton";
 import PrivyLastSeenChart from "@/components/PrivyLogins/PrivyLastSeenChart";
-import type { PrivyLoginsPeriod } from "@/types/privy";
+import type { AdminPeriod } from "@/types/admin";
 
 export default function PrivyLoginsPage() {
-  const [period, setPeriod] = useState<PrivyLoginsPeriod>("all");
+  const [period, setPeriod] = useState<AdminPeriod>("all");
   const { data, isLoading, error } = usePrivyLogins(period);
 
   return (
@@ -32,7 +32,7 @@ export default function PrivyLoginsPage() {
       </div>
 
       <div className="mb-6 flex items-center gap-4">
-        <PrivyPeriodSelector period={period} onPeriodChange={setPeriod} />
+        <PeriodSelector period={period} onPeriodChange={setPeriod} />
         {data && <PrivyLoginsStats data={data} />}
       </div>
 
