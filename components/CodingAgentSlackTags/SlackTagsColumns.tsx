@@ -58,7 +58,7 @@ export const slackTagsColumns: ColumnDef<SlackTag>[] = [
               rel="noopener noreferrer"
               className="text-sm text-blue-600 hover:underline dark:text-blue-400"
             >
-              #{url.match(/\/pull\/(\d+)/)?.[1]}
+              {url.match(/github\.com\/[^/]+\/([^/]+)\/pull\/(\d+)/)?.slice(1).join("#")}
             </a>
           ))}
         </div>

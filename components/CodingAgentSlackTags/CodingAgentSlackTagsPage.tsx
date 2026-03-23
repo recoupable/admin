@@ -81,7 +81,7 @@ export default function CodingAgentSlackTagsPage() {
                 date: d.date,
                 count: d.pull_request_count,
               })),
-              label: "Pull Requests",
+              label: "Tags with PRs",
             }}
           />
           <SlackTagsTable tags={data.tags} />
