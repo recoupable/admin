@@ -5,7 +5,8 @@ import PageBreadcrumb from "@/components/Sandboxes/PageBreadcrumb";
 import ApiDocsLink from "@/components/ApiDocs/ApiDocsLink";
 import { useSlackTags } from "@/hooks/useSlackTags";
 import SlackTagsTable from "./SlackTagsTable";
-import SlackTagsChart from "./SlackTagsChart";
+import AdminLineChart from "@/components/Admin/AdminLineChart";
+import { getTagsByDate } from "@/lib/coding-agent/getTagsByDate";
 import PeriodSelector from "@/components/Admin/PeriodSelector";
 import TableSkeleton from "@/components/Sandboxes/TableSkeleton";
 import ChartSkeleton from "@/components/PrivyLogins/ChartSkeleton";
@@ -61,7 +62,7 @@ export default function CodingAgentSlackTagsPage() {
 
       {!isLoading && !error && data && data.tags.length > 0 && (
         <>
-          <SlackTagsChart tags={data.tags} />
+          <AdminLineChart title="Tags Over Time" data={getTagsByDate(data.tags)} label="Tags" />
           <SlackTagsTable tags={data.tags} />
         </>
       )}

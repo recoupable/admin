@@ -9,7 +9,8 @@ import PeriodSelector from "@/components/Admin/PeriodSelector";
 import PrivyLoginsStats from "@/components/PrivyLogins/PrivyLoginsStats";
 import TableSkeleton from "@/components/Sandboxes/TableSkeleton";
 import ChartSkeleton from "@/components/PrivyLogins/ChartSkeleton";
-import PrivyLastSeenChart from "@/components/PrivyLogins/PrivyLastSeenChart";
+import AdminLineChart from "@/components/Admin/AdminLineChart";
+import { getLastSeenByDate } from "@/lib/privy/getLastSeenByDate";
 import type { AdminPeriod } from "@/types/admin";
 
 export default function PrivyLoginsPage() {
@@ -57,7 +58,7 @@ export default function PrivyLoginsPage() {
 
       {!isLoading && !error && data && data.logins.length > 0 && (
         <>
-          <PrivyLastSeenChart logins={data.logins} />
+          <AdminLineChart title="Last Seen Activity" data={getLastSeenByDate(data.logins)} label="Last Seen" />
           <PrivyLoginsTable logins={data.logins} />
         </>
       )}
