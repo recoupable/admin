@@ -34,9 +34,19 @@ export default function CodingAgentSlackTagsPage() {
       <div className="mb-6 flex items-center gap-4">
         <PeriodSelector period={period} onPeriodChange={setPeriod} />
         {data && (
-          <div className="text-sm text-gray-600 dark:text-gray-400">
-            <span className="font-semibold text-gray-900 dark:text-gray-100">{data.total}</span>{" "}
-            {data.total === 1 ? "tag" : "tags"} found
+          <div className="flex gap-4 text-sm text-gray-600 dark:text-gray-400">
+            <span>
+              <span className="font-semibold text-gray-900 dark:text-gray-100">{data.total}</span>{" "}
+              {data.total === 1 ? "tag" : "tags"}
+            </span>
+            <span>
+              <span className="font-semibold text-gray-900 dark:text-gray-100">{data.tags_with_pull_requests}</span>{" "}
+              with PRs
+            </span>
+            <span>
+              <span className="font-semibold text-gray-900 dark:text-gray-100">{data.total_pull_requests}</span>{" "}
+              total PRs
+            </span>
           </div>
         )}
       </div>
@@ -44,7 +54,7 @@ export default function CodingAgentSlackTagsPage() {
       {isLoading && (
         <>
           <ChartSkeleton />
-          <TableSkeleton columns={["Tagged By", "Prompt", "Channel", "Timestamp"]} />
+          <TableSkeleton columns={["Tagged By", "Prompt", "Channel", "Pull Requests", "Timestamp"]} />
         </>
       )}
 
@@ -62,7 +72,18 @@ export default function CodingAgentSlackTagsPage() {
 
       {!isLoading && !error && data && data.tags.length > 0 && (
         <>
-          <AdminLineChart title="Tags Over Time" data={getTagsByDate(data.tags)} label="Tags" />
+          <AdminLineChart
+            title="Tags & Pull Requests Over Time"
+            data={getTagsByDate(data.tags).map((d) => ({ date: d.date, count: d.count }))}
+            label="Tags"
+            secondLine={{
+              data: getTagsByDate(data.tags).map((d) => ({
+                date: d.date,
+                count: d.pull_request_count,
+              })),
+              label: "Tags with PRs",
+            }}
+          />
           <SlackTagsTable tags={data.tags} />
         </>
       )}

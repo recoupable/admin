@@ -6,6 +6,7 @@ export interface SlackTag {
   timestamp: string;
   channel_id: string;
   channel_name: string;
+  pull_requests: string[];
 }
 
 export type { AdminPeriod as SlackTagsPeriod } from "./admin";
@@ -13,5 +14,7 @@ export type { AdminPeriod as SlackTagsPeriod } from "./admin";
 export interface SlackTagsResponse {
   status: "success";
   total: number;
+  total_pull_requests: number;
+  tags_with_pull_requests: number;
   tags: SlackTag[];
 }

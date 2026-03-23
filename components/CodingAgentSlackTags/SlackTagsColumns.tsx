@@ -42,6 +42,30 @@ export const slackTagsColumns: ColumnDef<SlackTag>[] = [
     ),
   },
   {
+    id: "pull_requests",
+    accessorKey: "pull_requests",
+    header: "Pull Requests",
+    cell: ({ getValue }) => {
+      const prs = getValue<string[]>();
+      if (!prs?.length) return <span className="text-sm text-gray-400">—</span>;
+      return (
+        <div className="flex flex-col gap-1">
+          {prs.map((url) => (
+            <a
+              key={url}
+              href={url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm text-blue-600 hover:underline dark:text-blue-400"
+            >
+              {url.match(/github\.com\/[^/]+\/([^/]+)\/pull\/(\d+)/)?.slice(1).join("#")}
+            </a>
+          ))}
+        </div>
+      );
+    },
+  },
+  {
     id: "timestamp",
     accessorKey: "timestamp",
     header: ({ column }) => <SortableHeader column={column} label="Timestamp" />,
