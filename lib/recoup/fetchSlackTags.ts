@@ -2,7 +2,7 @@ import { API_BASE_URL } from "@/lib/consts";
 import type { SlackTagsPeriod, SlackTagsResponse } from "@/types/coding-agent";
 
 /**
- * Fetches Slack tagging analytics for the Recoup Coding Agent from GET /api/admins/coding-agent/slack-tags.
+ * Fetches Slack tagging analytics for the Recoup Coding Agent from GET /api/admins/coding/slack.
  * Authenticates using the caller's Privy access token (admin Bearer auth).
  *
  * @param accessToken - Privy access token from getAccessToken()
@@ -13,7 +13,7 @@ export async function fetchSlackTags(
   accessToken: string,
   period: SlackTagsPeriod,
 ): Promise<SlackTagsResponse> {
-  const url = new URL(`${API_BASE_URL}/api/admins/coding-agent/slack-tags`);
+  const url = new URL(`${API_BASE_URL}/api/admins/coding/slack`);
   url.searchParams.set("period", period);
 
   const res = await fetch(url.toString(), {
