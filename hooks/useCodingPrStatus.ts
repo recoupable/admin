@@ -20,7 +20,7 @@ export function useCodingPrStatus(tags: SlackTag[] | undefined) {
       const token = await getAccessToken();
       if (!token) throw new Error("Not authenticated");
       const res = await fetchCodingPrStatus(token, allPrUrls);
-      return new Set(res.pull_requests.filter((pr) => pr.merged).map((pr) => pr.url));
+      return new Set(res.pull_requests.filter((pr) => pr.status === "merged").map((pr) => pr.url));
     },
     enabled: ready && authenticated && allPrUrls.length > 0,
   });

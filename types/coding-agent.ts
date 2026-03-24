@@ -21,7 +21,7 @@ export interface SlackTagsResponse {
 
 export interface CodingPrStatus {
   url: string;
-  merged: boolean;
+  status: "open" | "closed" | "merged";
 }
 
 export interface CodingPrStatusResponse {
