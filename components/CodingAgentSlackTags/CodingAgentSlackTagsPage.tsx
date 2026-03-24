@@ -56,6 +56,12 @@ export default function CodingAgentSlackTagsPage() {
               <span className="font-semibold text-gray-900 dark:text-gray-100">{totalMergedPrs}</span>{" "}
               merged PRs
             </span>
+            <span>
+              <span className="font-semibold text-gray-900 dark:text-gray-100">
+                {data.total > 0 ? Math.round((totalMergedPrs / data.total) * 100) : 0}%
+              </span>{" "}
+              conversion
+            </span>
           </div>
         )}
       </div>
