@@ -16,7 +16,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { createSlackTagsColumns } from "./SlackTagsColumns";
+import { createSlackTagsColumns } from "./createSlackTagsColumns";
 import type { SlackTag } from "@/types/coding-agent";
 
 interface SlackTagsTableProps {

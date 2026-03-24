@@ -79,6 +79,3 @@ export function createSlackTagsColumns(mergedPrUrls?: Set<string>): ColumnDef<Sl
     },
   ];
 }
-
-/** @deprecated Use createSlackTagsColumns() instead */
-export const slackTagsColumns = createSlackTagsColumns();
