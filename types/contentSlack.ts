@@ -14,7 +14,7 @@ export type ContentSlackPeriod = "all" | "daily" | "weekly" | "monthly";
 export type ContentSlackResponse = {
   status: "success" | "error";
   total: number;
-  total_video_links: number;
-  tags_with_video_links: number;
+  total_videos: number;
+  tags_with_videos: number;
   tags: ContentSlackTag[];
 };

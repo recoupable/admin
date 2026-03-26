@@ -11,10 +11,10 @@ export default function ContentSlackStats({ data }: ContentSlackStatsProps) {
         <span className="font-semibold text-gray-900 dark:text-gray-100">{data.total}</span> tags
       </span>
       <span>
-        <span className="font-semibold text-gray-900 dark:text-gray-100">{data.total_video_links}</span> video links
+        <span className="font-semibold text-gray-900 dark:text-gray-100">{data.total_videos}</span> videos
       </span>
       <span>
-        <span className="font-semibold text-gray-900 dark:text-gray-100">{data.tags_with_video_links}</span> with videos
+        <span className="font-semibold text-gray-900 dark:text-gray-100">{data.tags_with_videos}</span> with videos
       </span>
     </div>
   );

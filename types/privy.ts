@@ -19,7 +19,7 @@ export type PrivyUser = {
   is_guest: boolean;
 };
 
-export type PrivyLoginsPeriod = "all" | "daily" | "weekly" | "monthly";
+export type { AdminPeriod as PrivyLoginsPeriod } from "./admin";
 
 export type PrivyLoginsResponse = {
   status: "success" | "error";
