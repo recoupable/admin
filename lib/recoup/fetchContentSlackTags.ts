@@ -1,12 +1,10 @@
 import { API_BASE_URL } from "@/lib/consts";
-import type {
-  ContentSlackPeriod,
-  ContentSlackResponse,
-} from "@/types/contentSlack";
+import type { AdminPeriod } from "@/types/admin";
+import type { ContentSlackResponse } from "@/types/contentSlack";
 
 export async function fetchContentSlackTags(
   accessToken: string,
-  period: ContentSlackPeriod,
+  period: AdminPeriod,
 ): Promise<ContentSlackResponse> {
   const url = new URL(`${API_BASE_URL}/api/admins/content/slack`);
   url.searchParams.set("period", period);

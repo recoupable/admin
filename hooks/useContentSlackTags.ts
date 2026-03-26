@@ -3,9 +3,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { usePrivy } from "@privy-io/react-auth";
 import { fetchContentSlackTags } from "@/lib/recoup/fetchContentSlackTags";
-import type { ContentSlackPeriod } from "@/types/contentSlack";
+import type { AdminPeriod } from "@/types/admin";
 
-export function useContentSlackTags(period: ContentSlackPeriod) {
+export function useContentSlackTags(period: AdminPeriod) {
   const { ready, authenticated, getAccessToken } = usePrivy();
 
   return useQuery({

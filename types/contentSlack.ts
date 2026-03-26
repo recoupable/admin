@@ -9,8 +9,6 @@ export type ContentSlackTag = {
   video_links: string[];
 };
 
-export type ContentSlackPeriod = "all" | "daily" | "weekly" | "monthly";
-
 export type ContentSlackResponse = {
   status: "success" | "error";
   total: number;

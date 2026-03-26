@@ -5,16 +5,26 @@ import PageBreadcrumb from "@/components/Sandboxes/PageBreadcrumb";
 import ApiDocsLink from "@/components/ApiDocs/ApiDocsLink";
 import { useContentSlackTags } from "@/hooks/useContentSlackTags";
 import ContentSlackTable from "@/components/ContentSlack/ContentSlackTable";
-import ContentSlackPeriodSelector from "@/components/ContentSlack/ContentSlackPeriodSelector";
 import ContentSlackStats from "@/components/ContentSlack/ContentSlackStats";
-import ContentSlackChart from "@/components/ContentSlack/ContentSlackChart";
+import PeriodSelector from "@/components/Admin/PeriodSelector";
+import AdminLineChart from "@/components/Admin/AdminLineChart";
 import TableSkeleton from "@/components/Sandboxes/TableSkeleton";
 import ChartSkeleton from "@/components/PrivyLogins/ChartSkeleton";
-import type { ContentSlackPeriod } from "@/types/contentSlack";
+import { getTagsByDate } from "@/lib/coding-agent/getTagsByDate";
+import type { AdminPeriod } from "@/types/admin";
 
 export default function ContentSlackPage() {
-  const [period, setPeriod] = useState<ContentSlackPeriod>("all");
+  const [period, setPeriod] = useState<AdminPeriod>("all");
   const { data, isLoading, error } = useContentSlackTags(period);
+
+  const tagsByDate = data
+    ? getTagsByDate(
+        data.tags.map((t) => ({
+          ...t,
+          pull_requests: t.video_links,
+        })),
+      )
+    : [];
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-10">
@@ -32,7 +42,7 @@ export default function ContentSlackPage() {
       </div>
 
       <div className="mb-6 flex items-center gap-4">
-        <ContentSlackPeriodSelector period={period} onPeriodChange={setPeriod} />
+        <PeriodSelector period={period} onPeriodChange={setPeriod} />
         {data && <ContentSlackStats data={data} />}
       </div>
 
@@ -57,7 +67,15 @@ export default function ContentSlackPage() {
 
       {!isLoading && !error && data && data.tags.length > 0 && (
         <>
-          <ContentSlackChart tags={data.tags} />
+          <AdminLineChart
+            title="Tags & Videos Over Time"
+            data={tagsByDate.map((d) => ({ date: d.date, count: d.count }))}
+            label="Tags"
+            secondLine={{
+              data: tagsByDate.map((d) => ({ date: d.date, count: d.pull_request_count })),
+              label: "Tags with Videos",
+            }}
+          />
           <ContentSlackTable tags={data.tags} />
         </>
       )}
