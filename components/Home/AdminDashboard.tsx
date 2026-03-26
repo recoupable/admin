@@ -13,6 +13,7 @@ export default function AdminDashboard() {
         <NavButton href="/sandboxes/orgs" label="View Org Commits" />
         <NavButton href="/privy" label="View Privy Logins" />
         <NavButton href="/coding" label="Coding Agent Tags" />
+        <NavButton href="/content" label="View Content Agent" />
       </nav>
     </div>
   );
