@@ -7,6 +7,21 @@ export const contentSlackColumns: ColumnDef<ContentSlackTag>[] = [
     id: "user_name",
     accessorKey: "user_name",
     header: "User",
+    cell: ({ row }) => {
+      const tag = row.original;
+      return (
+        <div className="flex items-center gap-2">
+          {tag.user_avatar && (
+            <img
+              src={tag.user_avatar}
+              alt={tag.user_name}
+              className="h-6 w-6 rounded-full"
+            />
+          )}
+          <span className="font-medium">{tag.user_name}</span>
+        </div>
+      );
+    },
   },
   {
     id: "timestamp",
