@@ -11,9 +11,9 @@ import AdminLineChart from "@/components/Admin/AdminLineChart";
 import AdminPieChart from "@/components/Admin/AdminPieChart";
 import TableSkeleton from "@/components/Sandboxes/TableSkeleton";
 import ChartSkeleton from "@/components/PrivyLogins/ChartSkeleton";
+import PieChartSkeleton from "@/components/ContentSlack/PieChartSkeleton";
 import { getTagsByDate } from "@/lib/coding-agent/getTagsByDate";
 import { getTagsByUser } from "@/lib/contentSlack/getTagsByUser";
-import { getTagsByTemplate } from "@/lib/contentSlack/getTagsByTemplate";
 import type { AdminPeriod } from "@/types/admin";
 
 export default function ContentSlackPage() {
@@ -29,7 +29,6 @@ export default function ContentSlackPage() {
       )
     : [];
   const tagsByUser = data ? getTagsByUser(data.tags) : [];
-  const tagsByTemplate = data ? getTagsByTemplate(data.tags) : [];
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-10">
@@ -54,6 +53,7 @@ export default function ContentSlackPage() {
       {isLoading && (
         <>
           <ChartSkeleton />
+          <PieChartSkeleton />
           <TableSkeleton columns={["User", "Timestamp", "Prompt", "Video Links"]} />
         </>
       )}
@@ -81,9 +81,8 @@ export default function ContentSlackPage() {
               label: "Tags with Videos",
             }}
           />
-          <div className="mb-6 grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div className="mb-6">
             <AdminPieChart title="Tags by User" data={tagsByUser} />
-            <AdminPieChart title="Tags by Template" data={tagsByTemplate} />
           </div>
           <ContentSlackTable tags={data.tags} />
         </>
