@@ -8,11 +8,9 @@ import AgentSignupsTable from "@/components/AgentSignups/AgentSignupsTable";
 import AgentSignupsStats from "@/components/AgentSignups/AgentSignupsStats";
 import PeriodSelector from "@/components/Admin/PeriodSelector";
 import AdminLineChart from "@/components/Admin/AdminLineChart";
-import AdminPieChart from "@/components/Admin/AdminPieChart";
 import TableSkeleton from "@/components/Sandboxes/TableSkeleton";
 import ChartSkeleton from "@/components/PrivyLogins/ChartSkeleton";
 import { getSignupsByDate } from "@/lib/agent-signups/getSignupsByDate";
-import { getSignupsByEmail } from "@/lib/agent-signups/getSignupsByEmail";
 import type { AdminPeriod } from "@/types/admin";
 
 export default function AgentSignupsPage() {
@@ -20,7 +18,6 @@ export default function AgentSignupsPage() {
   const { data, isLoading, error } = useAgentSignups(period);
 
   const signupsByDate = data ? getSignupsByDate(data.signups) : [];
-  const signupsByEmail = data ? getSignupsByEmail(data.signups) : [];
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-10">
@@ -68,9 +65,6 @@ export default function AgentSignupsPage() {
             data={signupsByDate.map((d) => ({ date: d.date, count: d.count }))}
             label="Sign-Ups"
           />
-          <div className="mb-6 grid grid-cols-1 gap-6 md:grid-cols-2">
-            <AdminPieChart title="Sign-Ups by Email" data={signupsByEmail} />
-          </div>
           <AgentSignupsTable signups={data.signups} />
         </>
       )}
