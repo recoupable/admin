@@ -49,7 +49,7 @@ export default function ContentSlackPage() {
       {isLoading && (
         <>
           <ChartSkeleton />
-          <TableSkeleton columns={["User", "Timestamp", "Prompt", "Video Links"]} />
+          <TableSkeleton columns={["User", "Timestamp", "Prompt", "Videos"]} />
         </>
       )}
 

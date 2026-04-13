@@ -48,7 +48,7 @@ export const contentSlackColumns: ColumnDef<ContentSlackTag>[] = [
     id: "video_links",
     accessorFn: (row) => row.video_links.length,
     header: ({ column }) => (
-      <SortableHeader column={column} label="Video Links" />
+      <SortableHeader column={column} label="Videos" />
     ),
     cell: ({ row }) => {
       const links = row.original.video_links;
@@ -63,9 +63,9 @@ export const contentSlackColumns: ColumnDef<ContentSlackTag>[] = [
               href={link}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-blue-600 hover:underline dark:text-blue-400 truncate max-w-xs"
+              className="text-sm text-blue-600 hover:underline dark:text-blue-400"
             >
-              {link}
+              Video {links.length > 1 ? i + 1 : ""}
             </a>
           ))}
         </div>
