@@ -14,6 +14,7 @@ export default function AdminDashboard() {
         <NavButton href="/privy" label="View Privy Logins" />
         <NavButton href="/coding" label="Coding Agent Tags" />
         <NavButton href="/content" label="View Content Agent" />
+        <NavButton href="/agent-signups" label="Agent Sign-Ups" />
       </nav>
     </div>
   );
