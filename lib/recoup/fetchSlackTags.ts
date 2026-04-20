@@ -7,14 +7,17 @@ import type { SlackTagsPeriod, SlackTagsResponse } from "@/types/coding-agent";
  *
  * @param accessToken - Privy access token from getAccessToken()
  * @param period - Time period: "all", "daily", "weekly", or "monthly"
+ * @param tag - Optional Slack user ID to filter results
  * @returns SlackTagsResponse with total count and list of tag events
  */
 export async function fetchSlackTags(
   accessToken: string,
   period: SlackTagsPeriod,
+  tag?: string,
 ): Promise<SlackTagsResponse> {
   const url = new URL(`${API_BASE_URL}/api/admins/coding/slack`);
   url.searchParams.set("period", period);
+  if (tag) url.searchParams.set("tag", tag);
 
   const res = await fetch(url.toString(), {
     headers: { Authorization: `Bearer ${accessToken}` },
