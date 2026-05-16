@@ -1,5 +1,6 @@
 import { type ColumnDef } from "@tanstack/react-table";
 import type { CreditsRollupRow } from "@/types/credits";
+import EmailCell from "./EmailCell";
 import ExpandToggleCell from "./ExpandToggleCell";
 
 interface CreditsColumnsArgs {
@@ -25,11 +26,7 @@ export function buildCreditsColumns({
     {
       id: "account_email",
       header: "Email",
-      cell: ({ row }) => (
-        <span className="text-sm text-gray-900 dark:text-gray-100">
-          {row.original.account_email ?? "—"}
-        </span>
-      ),
+      cell: ({ row }) => <EmailCell email={row.original.account_email} />,
     },
     {
       id: "account_name",
