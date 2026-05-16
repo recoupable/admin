@@ -2,7 +2,7 @@ import { type ColumnDef } from "@tanstack/react-table";
 import { SortableHeader } from "@/components/SandboxOrgs/SortableHeader";
 import { getEmail } from "@/lib/privy/getEmail";
 import { getLastSeen } from "@/lib/privy/getLastSeen";
-import EmailCell from "@/components/PrivyLogins/EmailCell";
+import EmailCell from "@/components/Admin/EmailCell";
 import LastSeenCell from "@/components/PrivyLogins/LastSeenCell";
 import type { PrivyUser } from "@/types/privy";
 

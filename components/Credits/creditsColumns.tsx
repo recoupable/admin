@@ -1,7 +1,7 @@
 import { type ColumnDef } from "@tanstack/react-table";
 import { SortableHeader } from "@/components/SandboxOrgs/SortableHeader";
+import EmailCell from "@/components/Admin/EmailCell";
 import type { CreditsRollupRow } from "@/types/credits";
-import EmailCell from "./EmailCell";
 import ExpandToggleCell from "./ExpandToggleCell";
 
 interface CreditsColumnsArgs {
@@ -29,7 +29,7 @@ export function buildCreditsColumns({
       id: "account_email",
       accessorFn: (row) => row.account_email ?? "",
       header: ({ column }) => <SortableHeader column={column} label="Email" />,
-      cell: ({ row }) => <EmailCell email={row.original.account_email} />,
+      cell: ({ row }) => <EmailCell getValue={() => row.original.account_email} />,
       sortingFn: "alphanumeric",
     },
     {
