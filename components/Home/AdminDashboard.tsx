@@ -10,6 +10,7 @@ export default function AdminDashboard() {
       </p>
       <nav className="flex gap-4">
         <NavButton href="/sandboxes" label="View Sandboxes" />
+        <NavButton href="/credits" label="View Credits" />
         <NavButton href="/sandboxes/orgs" label="View Org Commits" />
         <NavButton href="/privy" label="View Privy Logins" />
         <NavButton href="/coding" label="Coding Agent Tags" />
