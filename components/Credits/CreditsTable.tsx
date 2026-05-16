@@ -1,7 +1,13 @@
 "use client";
 
 import { Fragment, useMemo, useState } from "react";
-import { flexRender, getCoreRowModel, useReactTable } from "@tanstack/react-table";
+import {
+  flexRender,
+  getCoreRowModel,
+  getSortedRowModel,
+  useReactTable,
+  type SortingState,
+} from "@tanstack/react-table";
 import {
   Table,
   TableBody,
@@ -21,6 +27,9 @@ interface CreditsTableProps {
 
 export default function CreditsTable({ rows, period }: CreditsTableProps) {
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
+  const [sorting, setSorting] = useState<SortingState>([
+    { id: "total_credits_deducted_cents", desc: true },
+  ]);
 
   const columns = useMemo(
     () =>
@@ -44,7 +53,10 @@ export default function CreditsTable({ rows, period }: CreditsTableProps) {
   const table = useReactTable({
     data: rows,
     columns,
+    state: { sorting },
+    onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
   });
 
   return (
@@ -64,38 +76,30 @@ export default function CreditsTable({ rows, period }: CreditsTableProps) {
           ))}
         </TableHeader>
         <TableBody>
-          {table.getRowModel().rows.length ? (
-            table.getRowModel().rows.map((row) => {
-              const accountId = row.original.account_id;
-              const isExpanded = expanded.has(accountId);
-              return (
-                <Fragment key={row.id}>
-                  <TableRow data-state={isExpanded ? "expanded" : undefined}>
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                      </TableCell>
-                    ))}
+          {table.getRowModel().rows.map((row) => {
+            const accountId = row.original.account_id;
+            const isExpanded = expanded.has(accountId);
+            return (
+              <Fragment key={row.id}>
+                <TableRow data-state={isExpanded ? "expanded" : undefined}>
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    </TableCell>
+                  ))}
+                </TableRow>
+                {isExpanded && (
+                  <TableRow className="bg-gray-50/60 hover:bg-gray-50/60 dark:bg-gray-900/40 dark:hover:bg-gray-900/40">
+                    <TableCell colSpan={columns.length} className="p-0">
+                      <div className="px-4 py-4">
+                        <CreditsRowEvents accountId={accountId} period={period} />
+                      </div>
+                    </TableCell>
                   </TableRow>
-                  {isExpanded && (
-                    <TableRow className="bg-gray-50/60 hover:bg-gray-50/60 dark:bg-gray-900/40 dark:hover:bg-gray-900/40">
-                      <TableCell colSpan={columns.length} className="p-0">
-                        <div className="px-4 py-4">
-                          <CreditsRowEvents accountId={accountId} period={period} />
-                        </div>
-                      </TableCell>
-                    </TableRow>
-                  )}
-                </Fragment>
-              );
-            })
-          ) : (
-            <TableRow>
-              <TableCell colSpan={columns.length} className="h-24 text-center">
-                No results.
-              </TableCell>
-            </TableRow>
-          )}
+                )}
+              </Fragment>
+            );
+          })}
         </TableBody>
       </Table>
     </div>

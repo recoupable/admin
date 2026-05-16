@@ -7,11 +7,8 @@ import PeriodSelector from "@/components/Admin/PeriodSelector";
 import CreditsTableContainer from "./CreditsTableContainer";
 import type { AdminPeriod } from "@/types/admin";
 
-const DEFAULT_LIMIT = 100;
-
 export default function CreditsPage() {
   const [period, setPeriod] = useState<AdminPeriod>("monthly");
-  const [page, setPage] = useState(1);
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-10">
@@ -29,21 +26,10 @@ export default function CreditsPage() {
       </div>
 
       <div className="mb-4 flex items-center gap-4">
-        <PeriodSelector
-          period={period}
-          onPeriodChange={(next) => {
-            setPeriod(next);
-            setPage(1);
-          }}
-        />
+        <PeriodSelector period={period} onPeriodChange={setPeriod} />
       </div>
 
-      <CreditsTableContainer
-        period={period}
-        page={page}
-        limit={DEFAULT_LIMIT}
-        onPageChange={setPage}
-      />
+      <CreditsTableContainer period={period} />
     </main>
   );
 }

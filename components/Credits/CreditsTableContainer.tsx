@@ -2,26 +2,17 @@
 
 import TableSkeleton from "@/components/Sandboxes/TableSkeleton";
 import CreditsTable from "./CreditsTable";
-import PaginationControls from "./PaginationControls";
 import { useCreditsRollup } from "@/hooks/useCreditsRollup";
 import type { CreditsPeriod } from "@/types/credits";
 
 interface CreditsTableContainerProps {
   period: CreditsPeriod;
-  page: number;
-  limit: number;
-  onPageChange: (page: number) => void;
 }
 
 const ROLLUP_COLUMNS = ["", "Email", "Name", "Total credits (¢)", "Events"];
 
-export default function CreditsTableContainer({
-  period,
-  page,
-  limit,
-  onPageChange,
-}: CreditsTableContainerProps) {
-  const { data, isLoading, isFetching, error } = useCreditsRollup({ period, page, limit });
+export default function CreditsTableContainer({ period }: CreditsTableContainerProps) {
+  const { data, isLoading, error } = useCreditsRollup(period);
 
   if (isLoading) {
     return <TableSkeleton columns={ROLLUP_COLUMNS} />;
@@ -37,16 +28,13 @@ export default function CreditsTableContainer({
 
   if (!data) return null;
 
-  return (
-    <div>
-      <CreditsTable rows={data.rows} period={period} />
-      <PaginationControls
-        page={data.page}
-        limit={data.limit}
-        totalCount={data.total_count}
-        onPageChange={onPageChange}
-        isLoading={isFetching}
-      />
-    </div>
-  );
+  if (data.rows.length === 0) {
+    return (
+      <div className="flex items-center justify-center py-12 text-sm text-gray-400">
+        No accounts with credit usage for this period.
+      </div>
+    );
+  }
+
+  return <CreditsTable rows={data.rows} period={period} />;
 }
