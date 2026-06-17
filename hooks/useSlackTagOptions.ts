@@ -2,23 +2,21 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { usePrivy } from "@privy-io/react-auth";
-import { fetchSlackTags } from "@/lib/recoup/fetchSlackTags";
-import type { SlackTagsPeriod } from "@/types/coding-agent";
+import { fetchSlackTagOptions } from "@/lib/recoup/fetchSlackTagOptions";
 
 /**
- * Fetches Slack tagging analytics for the Recoup Coding Agent for the given period.
- * Optionally filters by a specific Slack user ID (tag).
+ * Fetches the distinct Slack user tags (filter options) for the coding agent page.
  * Authenticates with the Privy access token (admin Bearer auth).
  */
-export function useSlackTags(period: SlackTagsPeriod, tag?: string) {
+export function useSlackTagOptions() {
   const { ready, authenticated, getAccessToken } = usePrivy();
 
   return useQuery({
-    queryKey: ["admin", "coding-agent", "slack-tags", period, tag],
+    queryKey: ["admin", "coding-agent", "slack-tag-options"],
     queryFn: async () => {
       const token = await getAccessToken();
       if (!token) throw new Error("Not authenticated");
-      return fetchSlackTags(token, period, tag);
+      return fetchSlackTagOptions(token);
     },
     enabled: ready && authenticated,
   });

@@ -28,3 +28,15 @@ export interface CodingPrStatusResponse {
   status: "success";
   pull_requests: CodingPrStatus[];
 }
+
+export interface SlackTagOption {
+  id: string;
+  name: string;
+  avatar: string | null;
+}
+
+export interface SlackTagOptionsResponse {
+  status: "success";
+  total: number;
+  tags: SlackTagOption[];
+}
