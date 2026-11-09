@@ -1,3 +1,4 @@
+import { requestAdminJson } from "@/lib/recoup/requestAdminJson";
 import { API_BASE_URL } from "@/lib/consts";
 import type { SlackTagsPeriod, SlackTagsResponse } from "@/types/coding-agent";
 
@@ -16,14 +17,5 @@ export async function fetchSlackTags(
   const url = new URL(`${API_BASE_URL}/api/admins/coding/slack`);
   url.searchParams.set("period", period);
 
-  const res = await fetch(url.toString(), {
-    headers: { Authorization: `Bearer ${accessToken}` },
-  });
-
-  if (!res.ok) {
-    const body = await res.json().catch(() => ({}));
-    throw new Error(body.error ?? body.message ?? `HTTP ${res.status}`);
-  }
-
-  return res.json();
+  return requestAdminJson<SlackTagsResponse>(url.toString(), accessToken);
 }

@@ -2,7 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { usePrivy } from "@privy-io/react-auth";
-import { fetchAdminSandboxes } from "@/lib/fetchAdminSandboxes";
+import { fetchAdminSandboxes } from "@/lib/recoup/fetchAdminSandboxes";
 
 /**
  * Fetches account sandbox statistics from GET /api/admins/sandboxes

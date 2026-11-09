@@ -1,3 +1,4 @@
+import { requestAdminJson } from "@/lib/recoup/requestAdminJson";
 import { API_BASE_URL } from "@/lib/consts";
 import type { AccountSandboxRow } from "@/types/sandbox";
 
@@ -11,15 +12,10 @@ import type { AccountSandboxRow } from "@/types/sandbox";
 export async function fetchAdminSandboxes(
   accessToken: string,
 ): Promise<AccountSandboxRow[]> {
-  const res = await fetch(`${API_BASE_URL}/api/admins/sandboxes`, {
-    headers: { Authorization: `Bearer ${accessToken}` },
-  });
-
-  if (!res.ok) {
-    const body = await res.json().catch(() => ({}));
-    throw new Error(body.message ?? `HTTP ${res.status}`);
-  }
-
-  const data = await res.json();
+  const data = await requestAdminJson<{ accounts?: AccountSandboxRow[] }>(
+    `${API_BASE_URL}/api/admins/sandboxes`,
+    accessToken,
+    ["message"],
+  );
   return data.accounts ?? [];
 }

@@ -1,3 +1,4 @@
+import { requestAdminJson } from "@/lib/recoup/requestAdminJson";
 import { API_BASE_URL } from "@/lib/consts";
 import type { CreditsPeriod, CreditsEventsResponse } from "@/types/credits";
 
@@ -29,14 +30,5 @@ export async function fetchCreditsEvents({
   url.searchParams.set("page", String(page));
   url.searchParams.set("limit", String(limit));
 
-  const res = await fetch(url.toString(), {
-    headers: { Authorization: `Bearer ${accessToken}` },
-  });
-
-  if (!res.ok) {
-    const body = await res.json().catch(() => ({}));
-    throw new Error(body.error ?? body.message ?? `HTTP ${res.status}`);
-  }
-
-  return res.json();
+  return requestAdminJson<CreditsEventsResponse>(url.toString(), accessToken);
 }
