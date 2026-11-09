@@ -207,3 +207,40 @@ test("successful malformed JSON remains a rejected read", async () => {
     SyntaxError,
   );
 });
+
+test("malformed-shaped error JSON keeps the HTTP status for every adapter", async () => {
+  for (const [, request] of cases) {
+    for (const body of [null, 0, false, "upstream error", ["upstream error"]]) {
+      globalThis.fetch = async () => Response.json(body, { status: 503 });
+      await assert.rejects(request(), { message: "HTTP 503" });
+    }
+  }
+});
+
+test("error fields retain nullish priority and JavaScript string conversion", async () => {
+  const values = [
+    [0, "0"],
+    [false, "false"],
+    ["", ""],
+    [42, "42"],
+    [{ code: "upstream" }, "[object Object]"],
+    [["first", "second"], "first,second"],
+  ];
+  for (const [name, request] of cases) {
+    const messageOnly =
+      name === "sandboxes" || name === "sandbox organizations";
+    for (const [value, expected] of values) {
+      const body = messageOnly
+        ? { error: "ignored", message: value }
+        : { error: value, message: "lower-priority" };
+      globalThis.fetch = async () => Response.json(body, { status: 403 });
+      await assert.rejects(request(), { message: expected });
+      globalThis.fetch = async () =>
+        Response.json({ error: null, message: value }, { status: 403 });
+      await assert.rejects(request(), { message: expected });
+    }
+    globalThis.fetch = async () =>
+      Response.json({ error: null, message: null }, { status: 403 });
+    await assert.rejects(request(), { message: "HTTP 403" });
+  }
+});

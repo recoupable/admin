@@ -9,11 +9,15 @@ export async function requestAdminJson<T>(
   });
 
   if (!response.ok) {
-    const body = await response.json().catch(() => ({}));
+    const body: unknown = await response.json().catch(() => null);
+    const errorBody =
+      typeof body === "object" && body !== null && !Array.isArray(body)
+        ? (body as Record<string, unknown>)
+        : undefined;
     const message = errorFields
-      .map((field) => body[field])
+      .map((field) => errorBody?.[field])
       .find((value) => value !== null && value !== undefined);
-    throw new Error(message ?? `HTTP ${response.status}`);
+    throw new Error(String(message ?? `HTTP ${response.status}`));
   }
 
   return response.json();
