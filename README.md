@@ -30,6 +30,17 @@ pnpm build
 pnpm start
 ```
 
+## API transport and checks
+
+Resource adapters live in `lib/recoup/` and share `requestAdminJson` for Bearer
+requests and JSON errors. Each adapter owns its URL/query and response projection;
+sandbox endpoints retain their message-only error contract. `useIsAdmin` keeps its
+separate false-on-denial policy.
+
+Run `pnpm test` with Node 22.15+ (or Node 24+) for mocked-network transport regression
+checks. The suite loads the real TypeScript adapters and never contacts the API.
+Run `pnpm exec tsc --noEmit` and `pnpm build` for application checks.
+
 ## Project Structure
 
 ```text

@@ -1,3 +1,4 @@
+import { requestAdminJson } from "@/lib/recoup/requestAdminJson";
 import { API_BASE_URL } from "@/lib/consts";
 import type { CodingPrStatusResponse } from "@/types/coding-agent";
 
@@ -20,14 +21,5 @@ export async function fetchCodingPrStatus(
   const url = new URL(`${API_BASE_URL}/api/admins/coding/pr`);
   pullRequests.forEach((pr) => url.searchParams.append("pull_requests", pr));
 
-  const res = await fetch(url.toString(), {
-    headers: { Authorization: `Bearer ${accessToken}` },
-  });
-
-  if (!res.ok) {
-    const body = await res.json().catch(() => ({}));
-    throw new Error(body.error ?? body.message ?? `HTTP ${res.status}`);
-  }
-
-  return res.json();
+  return requestAdminJson<CodingPrStatusResponse>(url.toString(), accessToken);
 }

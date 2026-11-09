@@ -1,3 +1,4 @@
+import { requestAdminJson } from "@/lib/recoup/requestAdminJson";
 import { API_BASE_URL } from "@/lib/consts";
 
 /**
@@ -35,15 +36,9 @@ export async function fetchAccountPulseEmails(
   const url = new URL(`${API_BASE_URL}/api/admins/emails`);
   url.searchParams.set("account_id", accountId);
 
-  const res = await fetch(url.toString(), {
-    headers: { Authorization: `Bearer ${accessToken}` },
-  });
-
-  if (!res.ok) {
-    const body = await res.json().catch(() => ({}));
-    throw new Error(body.error ?? body.message ?? `HTTP ${res.status}`);
-  }
-
-  const data = await res.json();
+  const data = await requestAdminJson<{ emails?: PulseEmail[] }>(
+    url.toString(),
+    accessToken,
+  );
   return data.emails ?? [];
 }
